@@ -48,5 +48,27 @@ README〜ER図作成：7/2 〆切
 β版をRUNTEQ内リリース（MVP）：8/1〆切  
 本番リリース：8/27〆切  
 
----
-[画面遷移図](https://www.figma.com/file/Mhf4ayKerRbnDoINOcTBF0/%E7%94%BB%E9%9D%A2%E9%81%B7%E7%A7%BB%E5%9B%B3?node-id=0%3A1)
+## [■ 画面遷移図](https://www.figma.com/file/Mhf4ayKerRbnDoINOcTBF0/%E7%94%BB%E9%9D%A2%E9%81%B7%E7%A7%BB%E5%9B%B3?node-id=0%3A1)
+
+## [■ ER図](https://drive.google.com/file/d/1F3FmFdCgxf3DwAhCBfdfh9DtxtUPuRTo/view?usp=sharing)  
+以下テーブルの説明です。
+### Users
+- name:ユーザーネーム
+- email:メールアドレス
+- role:権限
+- avatar:アバター
+### Themes
+- title:お題
+### Recordings
+- voice:音声データ
+- text:録音の文字起こし
+- length:音声の長さ
+### TextAnalyses
+- word:文字起こしの結果を単語に分割したもの
+- filler:フィラーかどうか
+### Results
+- score:録音の採点結果
+- filler_count:フィラーの合計数
+- most_frequent_filler:最も発したフィラーの言葉
+### Rankings
+- rank:あるお題における順位

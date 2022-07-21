@@ -64,6 +64,7 @@ group :development do
   # gem "spring"
 end
 
+gem 'enum_help'
 gem 'sorcery'
 gem "jsbundling-rails"
 gem "cssbundling-rails"

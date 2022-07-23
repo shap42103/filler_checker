@@ -68,3 +68,4 @@ gem 'enum_help'
 gem 'sorcery'
 gem "jsbundling-rails"
 gem "cssbundling-rails"
+gem 'rails-i18n'

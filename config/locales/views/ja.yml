@@ -1,0 +1,27 @@
+ja:
+  defaults:
+    login: 'ログイン'
+    register: '新規登録'
+    logout: 'ログアウト'
+    account_setting: 'アカウント設定'
+    message:
+      require_login: 'ログインしてください'
+  users:
+    new:
+      title: 'ユーザー登録'
+    create:
+      success: 'ユーザー登録が完了しました'
+      failed: 'ユーザー登録に失敗しました'
+  user_sessions:
+    form:
+      email: 'メールアドレス'
+      password: 'パスワード'
+    new:
+      title: 'ログイン'
+      to_register_page: 'ユーザー登録'
+      password_forget: 'パスワードを忘れた方'
+    create:
+      success: 'ログインしました'
+      failed: 'ログインに失敗しました'
+    destroy:
+      success: 'ログアウトしました'

@@ -14,7 +14,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_24_223342) do
   create_table "recordings", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "voice", null: false
     t.text "text", null: false
-    t.time "length", null: false
+    t.integer "length", null: false
     t.bigint "user_id", null: false
     t.bigint "theme_id", null: false
     t.datetime "created_at", null: false
@@ -42,7 +42,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_24_223342) do
   end
 
   create_table "themes", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.integer "title", null: false
+    t.string "title", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

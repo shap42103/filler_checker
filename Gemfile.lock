@@ -83,6 +83,8 @@ GEM
     enum_help (0.0.19)
       activesupport (>= 3.0.0)
     erubi (1.10.0)
+    faker (2.21.0)
+      i18n (>= 1.8.11, < 2)
     faraday (2.3.0)
       faraday-net_http (~> 2.0)
       ruby2_keywords (>= 0.0.4)
@@ -220,6 +222,7 @@ DEPENDENCIES
   cssbundling-rails
   debug
   enum_help
+  faker
   importmap-rails
   jbuilder
   jsbundling-rails

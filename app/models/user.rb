@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   authenticates_with_sorcery!
+  has_many :recordings
 
   validates :name, presence: true, uniqueness: true
   validates :email, presence: true, uniqueness: true

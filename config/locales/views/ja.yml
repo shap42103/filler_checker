@@ -4,6 +4,12 @@ ja:
     register: '新規登録'
     logout: 'ログアウト'
     account_setting: 'アカウント設定'
+    challenge: '挑戦する'
+    show_everyone_results: 'みんなの結果を見る'
+    start_recording: '録音を開始する'
+    stop_recording: '録音を停止する'
+    restart_recording: 'やり直す'
+    show_result: '結果を確認する'
     message:
       require_login: 'ログインしてください'
   users:
@@ -25,3 +31,7 @@ ja:
       failed: 'ログインに失敗しました'
     destroy:
       success: 'ログアウトしました'
+  recordings:
+    index:
+      new_challenge: '新しい話題に挑戦する'
+      log: 'あなたの挑戦履歴'

@@ -1,0 +1,17 @@
+<%= form_with model: [@recording, @text_analyses], url: recording_text_analyses_path, local: true do |form| %>
+  <div>
+    <% @text_analyses.collection.each do |text_analysis| %>
+      <%= fields_for 'text_analyses[]', text_analysis do |field| %>
+        <div class="form-group">
+          <%= field.label :recording_id %>
+          <%= field.text_field :recording_id, id: 'text-analysis-recording-id', value: @recording.id %>
+          <%= field.label :word %>
+          <%= field.text_field :word, id: 'text-analysis-word' %>
+          <%= field.label :filler %>
+          <%= field.text_field :filler, id: 'text-analysis-filler' %>
+        </div>
+      <% end %>
+    <% end %>
+    <%= form.submit '結果を見る', class: 'btn btn-primary', id: 'regist-word' %>
+  </div>
+<% end %>

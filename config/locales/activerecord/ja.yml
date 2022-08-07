@@ -10,3 +10,9 @@ ja:
         password_confirmation: 'パスワード（確認）'
         role: '権限'
         avatar: 'アバター'
+      recording:
+        voice: '音声'
+        text: '文字起こし'
+        length: '録音時間'
+      theme:
+        title: 'テーマ'

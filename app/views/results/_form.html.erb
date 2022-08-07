@@ -1,0 +1,11 @@
+<%= form_with model: [@recording, @result], url: recording_results_path, local: true do |f| %>
+  <div class="form-group">
+    <%= f.label :recording_id %>
+    <%= f.text_field :recording_id, id: 'result-recording-id', value: params[:recording_id] %>
+    <%= f.label :filler_count %>
+    <%= f.text_field :filler_count, id: 'result-filler-count', value: @filler_count %>
+    <%= f.label :most_frequent_filler %>
+    <%= f.text_field :most_frequent_filler, id: 'result-most-frequent-filler', value: @most_frequent_filler[:word] %>
+  </div>
+  <%= f.submit '結果を登録する', class: 'btn btn-primary', id: 'regist-result' %>
+<% end %>

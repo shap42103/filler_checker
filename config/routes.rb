@@ -5,9 +5,10 @@ Rails.application.routes.draw do
   get 'login', to: 'user_sessions#new', as: :login
   post 'login', to: "user_sessions#create"
   delete 'logout', to: 'user_sessions#destroy', as: :logout
+  get 'results', to: "results#index"
 
   resources :users
-  resources :recordings, only: %i[index new create show] do
+  resources :recordings, only: %i[new create show] do
     resources :text_analyses, only: %i[new create]
     resources :results, only: %i[new create show]
   end

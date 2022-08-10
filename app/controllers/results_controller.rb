@@ -1,4 +1,8 @@
 class ResultsController < ApplicationController
+  def index
+    @results = Result.joins(:recording).where("recordings.user_id = ?", current_user.id)
+  end
+
   def new
     @text_analysis = TextAnalysis.where(recording_id: params[:recording_id])
     @filler_count = @text_analysis.filler_count

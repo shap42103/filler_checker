@@ -1,10 +1,71 @@
-<h1>えっと、あのー…<br>無意識に出てしまう<br>そんな言葉を可視化する</h1>
-<div>
-  <%= link_to t('defaults.challenge'), new_recording_path, class: 'btn btn-warning' %>
+<div id="slogan">
+  <div class="row">
+    <div class="col-6">
+      <h1>
+        <p>えっと、あのー…</p>
+        <p>無意識に出てしまう</p>
+        <p>そんな言葉を可視化する</p>
+      </h1>
+      <div>
+        <%= link_to t('defaults.challenge'), new_recording_path, class: 'btn btn-warning' %>
+        <%= link_to t('defaults.show_everyone_results'), '#', class: 'btn btn-info' %>
+      </div>
+    </div>
+    <div class="col-6">
+      <%= image_tag 'sample', class: "img-fluid" %>
+    </div>
+  </div>
 </div>
-<div>
-  <%= link_to t('defaults.show_everyone_results'), '#', class: 'btn btn-info' %>
+
+<div id="recommend-for">
+  <h2>こんなひとにおすすめ</h2>
+  <div class="row">
+    <div class="col-4">
+      <%= image_tag 'sample', class: "img-fluid rounded-circle" %>
+      <h3>text</h3>
+      <p>description</p>
+    </div>
+    <div class="col-4">
+      <%= image_tag 'sample', class: "img-fluid rounded-circle" %>
+      <h3>text</h3>
+      <p>description</p>
+    </div>
+    <div class="col-4">
+      <%= image_tag 'sample', class: "img-fluid rounded-circle" %>
+      <h3>text</h3>
+      <p>description</p>
+    </div>
+  </div>
 </div>
-<div>
+
+<div id="how-to-use">
+  <h2>本サービスの使い方</h2>
+  <div class="row">
+    <div class="col-6">
+      <%= image_tag 'sample', class: "img-fluid" %>
+    </div>
+    <div class="col-6">
+      <h3>text</h3>
+      <p>description</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-6">
+      <h3>text</h3>
+      <p>description</p>
+    </div>
+    <div class="col-6">
+      <%= image_tag 'sample', class: "img-fluid" %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-6">
+      <%= image_tag 'sample', class: "img-fluid" %>
+    </div>
+    <div class="col-6">
+      <h3>text</h3>
+      <p>description</p>
+    </div>
+  </div>
   <%= link_to t('defaults.challenge'), new_recording_path, class: 'btn btn-warning' %>
 </div>

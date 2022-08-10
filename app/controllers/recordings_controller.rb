@@ -1,8 +1,4 @@
 class RecordingsController < ApplicationController
-  def index
-    @recordings = Recording.includes(:user).all
-  end
-
   def new
     @themes = Theme.all
     @recording = Recording.new

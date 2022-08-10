@@ -10,8 +10,12 @@ ja:
     stop_recording: '録音を停止する'
     restart_recording: 'やり直す'
     show_result: '結果を確認する'
+    my_results: '録音履歴'
     message:
       require_login: 'ログインしてください'
+  time:
+    formats:
+      default: "%Y/%m/%d %H:%M"
   users:
     new:
       title: 'ユーザー登録'
@@ -31,7 +35,7 @@ ja:
       failed: 'ログインに失敗しました'
     destroy:
       success: 'ログアウトしました'
-  recordings:
+  results:
     index:
       new_challenge: '新しい話題に挑戦する'
       log: 'あなたの挑戦履歴'

@@ -1,0 +1,116 @@
+<div style="margin: 20px 2px;">
+  「サービス ID」「サービスパスワード」を入力した後に <b>[サービス認証キーの取得]</b> ボタンを押して、「サービス認証キー」を取得してください<span class="toggle_issue_options">。</span>
+</div>
+
+<table>
+  <tr>
+    <td>&nbsp;APPKEY</td>
+    <td><input type="text" class="text" id="authorization" spellcheck="false" tabindex="3"></td>
+  </tr>
+  <tr class="options">
+    <td>&nbsp;フィラー単語を保持＝１</td>
+    <td><input type="text" class="text" id="keepFillerToken" spellcheck="false" tabindex="3"></td>
+  </tr>
+  <tr>
+    <td>
+      <%= button_to t('defaults.start_recording'), '#', id: "resumePauseButton", class: "btn btn-danger" %>
+    </td>
+    <td class="recognitionResult">
+      <span class="recognitionResultText"></span>
+      <span class="recognitionResultInfo"></span>
+    </td>
+  </tr>
+</table>
+
+<div style="margin: 20px 2px 24px 2px;">
+  <b>[録音の開始]</b> ボタンを押して、マイクに向かって話してください。マイクの使用や共有などを求められた場合は、「許可」 ボタンまたは 「共有」 ボタンを押してください<span class="toggle_options">。</span>
+</div>
+<div class="bar"><hr>
+  <div id="version"></div>
+</div>
+<div id="messages"></div>
+
+<div class="not-use" style="display:none;">
+  <form>
+    <table border="0" width="100%" cellspacing="3" cellpadding="0">
+      <tr>
+        <td width="270">&nbsp;ワンタイムAppKey発行API URL</td>
+        <td><input type="text" class="text" id="issuerURL" spellcheck="false" tabindex="1"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;サービス ID</td>
+        <td><input type="text" class="text" id="sid" spellcheck="false" tabindex="1"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;サービスパスワード</td>
+        <td><input type="password" class="text" id="spw" spellcheck="false" autocomplete="on" tabindex="1"></td>
+      </tr>
+      <tr class="issue_options" style="display:none;">
+        <td>&nbsp;有効期限</td>
+        <td><input type="text" class="text" id="epi" spellcheck="false" tabindex="1"></td>
+      </tr>
+      <tr>
+        <td>
+          <input type="button" value="サービス認証キーの取得" class="text" id="issueButton" tabindex="2">
+        </td>
+        <td>
+          &nbsp;
+        </td>
+      </tr>
+    </table>
+  </form>
+
+  <table border="0" width="100%" cellspacing="3" cellpadding="0">
+    <tr>
+      <td width="270">&nbsp;サーバ URL</td>
+      <td><input type="text" class="text" id="serverURL" spellcheck="false" tabindex="3"></td>
+    </tr>
+    <tr>
+      <td>&nbsp;接続エンジン名</td>
+      <td><input type="text" class="text grammarFileNames" spellcheck="false" tabindex="3"></td>
+    </tr>
+    <tr class="options">
+      <td>&nbsp;プロファイル ID</td>
+      <td><input type="text" class="text" id="profileId" spellcheck="false" tabindex="3"></td>
+    </tr>
+    <tr class="options">
+      <td>&nbsp;プロファイル単語</td>
+      <td><input type="text" class="text" id="profileWords" spellcheck="false" tabindex="3"></td>
+    </tr>
+    <tr class="options">
+      <td>&nbsp;セグメンタプロパティ文字列</td>
+      <td><input type="text" class="text" id="segmenterProperties" spellcheck="false" tabindex="3"></td>
+    </tr>
+    <tr class="options">
+      <td>&nbsp;認識中イベント発行間隔 (単位：ミリ秒)</td>
+      <td><input type="text" class="text" id="resultUpdatedInterval" spellcheck="false" tabindex="3"></td>
+    </tr>
+    <tr class="options">
+      <td>&nbsp;拡張情報</td>
+      <td><input type="text" class="text" id="extension" spellcheck="false" tabindex="3"></td>
+    </tr>
+    <tr class="options">
+      <td>&nbsp;<font color="silver">音声データ形式</font></td>
+      <td><input type="text" class="text" id="codec" spellcheck="false" tabindex="3" readonly></td>
+    </tr>
+    <tr class="options">
+      <td>&nbsp;認識結果タイプ</td>
+      <td><input type="text" class="text" id="resultType" spellcheck="false" tabindex="3"></td>
+    </tr>
+    <tr class="options">
+      <td>&nbsp;無発話許容時間 (単位：ミリ秒)</td>
+      <td><input type="text" class="text" id="checkIntervalTime" spellcheck="false" tabindex="3"></td>
+    </tr>
+    <tr class="options">
+      <td>&nbsp;連続録音可能時間 (単位: ミリ秒)</td>
+      <td><input type="text" class="text" id="maxRecordingTime" spellcheck="false" tabindex="3"></td>
+    </tr>
+  </table>
+</div>
+<%= render 'form' %>
+<%= link_to t('defaults.restart_recording'), new_recording_path, class: "btn btn-danger" %>
+
+<%= javascript_include_tag "voice_recognition/wrp.js" %>
+<%= javascript_include_tag "voice_recognition/recorder.js" %>
+<%= javascript_include_tag "voice_recognition/result.js" %>
+<%= javascript_include_tag "voice_recognition/process.js" %>

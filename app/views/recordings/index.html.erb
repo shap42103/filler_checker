@@ -1,0 +1,10 @@
+<h1><%= t('.new_challenge') %></h1>
+<%= link_to t('defaults.challenge'), new_recording_path, class: '' %>
+<h1><%= t('.log') %></h1>
+グラフ
+表
+<%= @recordings.each do |recording| %>
+  <div class='a'>
+    <%= recording.text %>
+  </div>
+<% end %>

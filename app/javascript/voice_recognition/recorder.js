@@ -1,4 +1,4 @@
-var Recorder = function() {
+let Recorder = function() {
 	// window.AudioContext()
 	window.AudioContext = window.AudioContext || window.webkitAudioContext || window.mozAudioContext || window.msAudioContext;
 	// navigator.getUserMedia()
@@ -15,7 +15,7 @@ var Recorder = function() {
 	} : null);
 
 	// public オブジェクト
-	var recorder_ = {
+	let recorder_ = {
 		// public プロパティ
 		version: "Recorder/1.0.04",
 		downSampling: false,
@@ -35,79 +35,26 @@ var Recorder = function() {
 		TRACE: undefined
 	};
 
-	// 録音関連
-	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-	//  ┌────┐                                                      
-	//  │0       │←───────────────────────┐┐┐
-	//  └┬───┘                                                │││
-	//    │resume()                                                │││
-	//    │ - getUserMedia()                                       │││
-	//    │                                                        │││
-	//    ↓resumeStarted                                           │││
-	//  ┌────┐                                                │││
-	//  │1       │                                                │││
-	//  └┬┬┬─┘                                                │││
-	//    │││getUserMedia() 失敗                                 │││
-	//    │││                                                    │││
-	//    │││pauseEnded                                          │││
-	//    ││└──────────────────────────┘││
-	//    ││                                                        ││
-	//    ││getUserMedia() 成功 && state_==3                        ││
-	//    ││ - audioStream.getTracks().forEach(track=>track.stop()) ││
-	//    ││                                                        ││
-	//    ││pauseEnded                                              ││
-	//    │└────────────────────────────┘│
-	//    │                                                            │
-	//    │getUserMedia() 成功 && state_==1                            │
-	//    │ - audioProvider_=audioContext_.createMediaStreamSource     │
-	//    │                                             (audioStream_) │
-	//    │ - audioProvider_.connect(audioProcessor_)                  │
-	//    │ - audioProcessor_.connect(audioContext_.destination)       │
-	//    │                                                            │
-	//    ↓resumeEnded                                                 │
-	//  ┌────┐                                                    │
-	//  │2 録音中│←────────────────────────┐│
-	//  └┬┬──┘                                                  ││
-	//    ││audioProcessor_.onaudioprocess                          ││
-	//    │└────────────────────────────┘│
-	//    │                                                            │
-	//    │pause()                                                     │
-	//    │                                                            │
-	//    ↓pauseStarted                                                │
-	//  ┌────┐                                                    │
-	//  │3       │                                                    │
-	//  └┬───┘                                                    │
-	//    │audioProcessor_.onaudioprocess                              │
-	//    │ - audioStream_.getTracks().forEach(track=>track.stop())    │
-	//    │ - audioProvider_.disconnect()                              │
-	//    │ - audioProcessor_.disconnect()                             │
-	//    ↓                                                            │
-	//  ┌────┐                                                    │
-	//  │4       │                                                    │
-	//  └┬───┘                                                    │
-	//    │pauseEnded                                                  │
-	//    └──────────────────────────────┘
-	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-	var state_ = -1;
-	var audioContext_;
-	var audioProcessor_;
-	var audioProcessor_onaudioprocess_;
-	var audioProcessor_onaudioprocess_recorded_;
-	var audioProcessor_onaudioprocess_downSampling_;
-	var audioProcessor_onaudioprocess_downSampling_recorded_;
-	var audioStream_;
-	var audioProvider_;
-	var audioSamplesPerSec_;
-	var audioDecimatationFactor_;
-	var temporaryAudioData_;
-	var temporaryAudioDataSamples_;
-	var coefData_;
-	var pcmData_;
-	var waveData_;
-	var waveDataBytes_;
-	var waveFile_;
-	var reason_;
-	var maxRecordingTimeTimerId_;
+	let state_ = -1;
+	let audioContext_;
+	let audioProcessor_;
+	let audioProcessor_onaudioprocess_;
+	let audioProcessor_onaudioprocess_recorded_;
+	let audioProcessor_onaudioprocess_downSampling_;
+	let audioProcessor_onaudioprocess_downSampling_recorded_;
+	let audioStream_;
+	let audioProvider_;
+	let audioSamplesPerSec_;
+	let audioDecimatationFactor_;
+	let temporaryAudioData_;
+	let temporaryAudioDataSamples_;
+	let coefData_;
+	let pcmData_;
+	let waveData_;
+	let waveDataBytes_;
+	let waveFile_;
+	let reason_;
+	let maxRecordingTimeTimerId_;
 
 	// 各種変数の初期化
 	function initialize_() {
@@ -119,11 +66,11 @@ var Recorder = function() {
 			audioProcessor_ = audioContext_.createJavaScriptNode(0, 1, 1);
 		}
 		audioProcessor_onaudioprocess_ = function(event) {
-			var audioData = event.inputBuffer.getChannelData(0);
-			var pcmData = new Uint8Array(audioData.length * 2);
-			var pcmDataIndex = 0;
-			for (var audioDataIndex = 0; audioDataIndex < audioData.length; audioDataIndex++) {
-				var pcm = audioData[audioDataIndex] * 32768 | 0; // 小数 (0.0～1.0) を 整数 (-32768～32767) に変換...
+			let audioData = event.inputBuffer.getChannelData(0);
+			let pcmData = new Uint8Array(audioData.length * 2);
+			let pcmDataIndex = 0;
+			for (let audioDataIndex = 0; audioDataIndex < audioData.length; audioDataIndex++) {
+				let pcm = audioData[audioDataIndex] * 32768 | 0; // 小数 (0.0～1.0) を 整数 (-32768～32767) に変換...
 				if (pcm > 32767) {
 					pcm = 32767;
 				} else
@@ -146,10 +93,10 @@ var Recorder = function() {
 			}
 		};
 		audioProcessor_onaudioprocess_recorded_ = function(event) {
-			var audioData = event.inputBuffer.getChannelData(0);
-			var pcmDataIndex = 1;
-			for (var audioDataIndex = 0; audioDataIndex < audioData.length; audioDataIndex++) {
-				var pcm = audioData[audioDataIndex] * 32768 | 0; // 小数 (0.0～1.0) を 整数 (-32768～32767) に変換...
+			let audioData = event.inputBuffer.getChannelData(0);
+			let pcmDataIndex = 1;
+			for (let audioDataIndex = 0; audioDataIndex < audioData.length; audioDataIndex++) {
+				let pcm = audioData[audioDataIndex] * 32768 | 0; // 小数 (0.0～1.0) を 整数 (-32768～32767) に変換...
 				if (pcm > 32767) {
 					pcm = 32767;
 				} else
@@ -176,20 +123,20 @@ var Recorder = function() {
 				return;
 			}
 			// -->
-			var audioData = event.inputBuffer.getChannelData(0);
-			var audioDataIndex = 0;
+			let audioData = event.inputBuffer.getChannelData(0);
+			let audioDataIndex = 0;
 			while (temporaryAudioDataSamples_ < temporaryAudioData_.length) {
 				temporaryAudioData_[temporaryAudioDataSamples_++] = audioData[audioDataIndex++];
 			}
 			while (temporaryAudioDataSamples_ == temporaryAudioData_.length) {
-				var pcmData = new Uint8Array((audioData.length / audioDecimatationFactor_ | 0) * 2);
-				var pcmDataIndex = 0;
-				for (var temporaryAudioDataIndex = audioDecimatationFactor_ - 1; temporaryAudioDataIndex + 20 < temporaryAudioData_.length; temporaryAudioDataIndex += audioDecimatationFactor_) {
-					var pcm_float = 0.0;
-					for (var i = 0; i <= 20; i++) {
+				let pcmData = new Uint8Array((audioData.length / audioDecimatationFactor_ | 0) * 2);
+				let pcmDataIndex = 0;
+				for (let temporaryAudioDataIndex = audioDecimatationFactor_ - 1; temporaryAudioDataIndex + 20 < temporaryAudioData_.length; temporaryAudioDataIndex += audioDecimatationFactor_) {
+					let pcm_float = 0.0;
+					for (let i = 0; i <= 20; i++) {
 						pcm_float += temporaryAudioData_[temporaryAudioDataIndex + i] * coefData_[i];
 					}
-					var pcm = pcm_float * 32768 | 0; // 小数 (0.0～1.0) を 整数 (-32768～32767) に変換...
+					let pcm = pcm_float * 32768 | 0; // 小数 (0.0～1.0) を 整数 (-32768～32767) に変換...
 					if (pcm > 32767) {
 						pcm = 32767;
 					} else
@@ -202,7 +149,7 @@ var Recorder = function() {
 				waveData_.push(pcmData.buffer);
 				waveDataBytes_ += pcmData.buffer.byteLength;
 				temporaryAudioDataSamples_ = 0;
-				var temporaryAudioDataIndex = temporaryAudioData_.length - 20;
+				let temporaryAudioDataIndex = temporaryAudioData_.length - 20;
 				while (temporaryAudioDataIndex < temporaryAudioData_.length) {
 					temporaryAudioData_[temporaryAudioDataSamples_++] = temporaryAudioData_[temporaryAudioDataIndex++];
 				}
@@ -226,19 +173,19 @@ var Recorder = function() {
 				return;
 			}
 			// -->
-			var audioData = event.inputBuffer.getChannelData(0);
-			var audioDataIndex = 0;
+			let audioData = event.inputBuffer.getChannelData(0);
+			let audioDataIndex = 0;
 			while (temporaryAudioDataSamples_ < temporaryAudioData_.length) {
 				temporaryAudioData_[temporaryAudioDataSamples_++] = audioData[audioDataIndex++];
 			}
 			while (temporaryAudioDataSamples_ == temporaryAudioData_.length) {
-				var pcmDataIndex = 1;
-				for (var temporaryAudioDataIndex = audioDecimatationFactor_ - 1; temporaryAudioDataIndex + 20 < temporaryAudioData_.length; temporaryAudioDataIndex += audioDecimatationFactor_) {
-					var pcm_float = 0.0;
-					for (var i = 0; i <= 20; i++) {
+				let pcmDataIndex = 1;
+				for (let temporaryAudioDataIndex = audioDecimatationFactor_ - 1; temporaryAudioDataIndex + 20 < temporaryAudioData_.length; temporaryAudioDataIndex += audioDecimatationFactor_) {
+					let pcm_float = 0.0;
+					for (let i = 0; i <= 20; i++) {
 						pcm_float += temporaryAudioData_[temporaryAudioDataIndex + i] * coefData_[i];
 					}
-					var pcm = pcm_float * 32768 | 0; // 小数 (0.0～1.0) を 整数 (-32768～32767) に変換...
+					let pcm = pcm_float * 32768 | 0; // 小数 (0.0～1.0) を 整数 (-32768～32767) に変換...
 					if (pcm > 32767) {
 						pcm = 32767;
 					} else
@@ -250,7 +197,7 @@ var Recorder = function() {
 				}
 				if (recorder_.recorded) recorder_.recorded(pcmData_, 1, pcmDataIndex - 1);
 				temporaryAudioDataSamples_ = 0;
-				var temporaryAudioDataIndex = temporaryAudioData_.length - 20;
+				let temporaryAudioDataIndex = temporaryAudioData_.length - 20;
 				while (temporaryAudioDataIndex < temporaryAudioData_.length) {
 					temporaryAudioData_[temporaryAudioDataSamples_++] = temporaryAudioData_[temporaryAudioDataIndex++];
 				}
@@ -365,7 +312,7 @@ var Recorder = function() {
 			state_ = 0;
 		}
 		if (recorder_.downSamplingElement) recorder_.downSampling = recorder_.downSamplingElement.checked;
-		if (recorder_.maxRecordingTimeElement) recorder_.maxRecordingTime = recorder_.maxRecordingTimeElement.value;
+		if (recorder_.maxRecordingTimeElement) recorder_.maxRecordingTime = recorder_.maxRecordingTimeElement;
 		if (recorder_.downSampling) {
 			if (audioContext_.sampleRate === 48000) {
 				audioSamplesPerSec_ = 16000;
@@ -399,7 +346,7 @@ var Recorder = function() {
 		}
 		state_ = 1;
 		if (audioDecimatationFactor_ > 1) {
-			for (var i = 0; i <= 20; i++) {
+			for (let i = 0; i <= 20; i++) {
 				temporaryAudioData_[i] = 0.0;
 			}
 			temporaryAudioDataSamples_ = 20;
@@ -431,13 +378,13 @@ var Recorder = function() {
 		).then(
 			function(audioStream) {
 				audioStream.stopTracks = function() {
-					var tracks = audioStream.getTracks();
-					for (var i = 0; i < tracks.length; i++) {
+					let tracks = audioStream.getTracks();
+					for (let i = 0; i < tracks.length; i++) {
 						tracks[i].stop();
 					}
 					state_ = 0;
 					if (waveData_) {
-						var waveData = new DataView(waveData_[0]);
+						let waveData = new DataView(waveData_[0]);
 						waveData.setUint8(0, 0x52); // 'R'
 						waveData.setUint8(1, 0x49); // 'I'
 						waveData.setUint8(2, 0x46); // 'F'

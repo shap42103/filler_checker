@@ -1,6 +1,6 @@
-var Wrp = function() {
+let Wrp = function() {
 	// public オブジェクト
-	var wrp_ = {
+	let wrp_ = {
 		// public プロパティ
 		version: "Wrp/1.0.04",
 		serverURL: "",
@@ -13,13 +13,13 @@ var Wrp = function() {
 		profileWordsElement: undefined,
 		segmenterProperties: "",
 		segmenterPropertiesElement: undefined,
-		keepFillerToken: "",
+		keepFillerToken: 1,
 		keepFillerTokenElement: undefined,
 		resultUpdatedInterval: "",
 		resultUpdatedIntervalElement: undefined,
 		extension: "",
 		extensionElement: undefined,
-		authorization: "",
+		authorization: api_info.key ,
 		authorizationElement: undefined,
 		codec: "",
 		codecElement: undefined,
@@ -64,101 +64,17 @@ var Wrp = function() {
 		TRACE: undefined
 	};
 
-	// 通信関連
-	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-	//  ┌───────────────────────────────┐
-	//  │0(disconnected)                                               │
-	//  └────────┬──────────────────────┘
-	//           connect()↓↑onclose   ↑onclose     ↑onclose           
-	//  ┌─────────┴──┐    │    ┌───┴────────┐
-	//  │1(connecting)           │    │    │8(disconnecting)        │
-	//  └────────┬───┘    │    └────────────┘
-	//              onopen│            │          ↑↑                  
-	//                    ↓            │       ※1││disconnect()      
-	//  ┌───────────────┴─────┴┴────────┐
-	//  │2(connected)                                                  │
-	//  └────────┬──────────────────────┘
-	//    feedDataResume()│↑                        ↑                  
-	//            resume()↓│pauseEnded              │pauseEnded        
-	//  ┌─────────┴──┐          ┌───┴────────┐
-	//  │3(waiting resumeEnded)  │    ┌─→│7(waiting pauseEnded)   │
-	//  └────────┬───┘    │    └────────────┘
-	//         resumeEnded│┌─────┘            ↑                  
-	//                 's'││pause()                 │pause()           
-	//                    ↓│'s' error response      │'e' response      
-	//  ┌─────────┴──┐          ┌───┴────────┐
-	//  │4(waiting 's' response) │          │6(waiting 'e' response) │
-	//  └────────┬───┘          └────────────┘
-	//        's' response│                          ↑'e'               
-	//                    ↓                          │feedDataPause()   
-	//  ┌──────────────────────┴────────┐
-	//  │5(resumed)                                                    │
-	//  └────────┬──────────────────────┘
-	//          feedData()│                          ↑                  
-	//                 'p'└─────────────┘                  
-	//                                    ※1 error response・disconnect()
-	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-	//  ┌───────────────────────────────┐
-	//  │0(disconnected)                                               │
-	//  └───────────────────────────────┘
-	//    ↑pauseEnded                          ↑pauseEnded              
-	//  ┌┴─────────┐              ┌┴───────────┐
-	//  │13                  ├──────→│17                      │
-	//  └──────────┘resumeEnded   └────────────┘
-	//    ↑                    pause()      pause()↑         onclose↑  
-	//    │onclose                          onclose├──┬──┐    │  
-	//  ┌┴┐                                    ┌┴┐┌┴┐┌┴┐┌┴┐
-	//  │3 │                                    │4 ││5 ││6 ││7 │
-	//  └─┘                                    └─┘└─┘└─┘└─┘
-	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-	//  ┌───────────────────────────────┐
-	//  │8(disconnecting)                                              │
-	//  └───────────────────────────────┘
-	//    ↑                    ┌─┐          ↑                  ┌─┐
-	//    │                ┌→│13│          │              ┌→│17│
-	//    │disconnect()    │  └─┘          │disconnect()  │  └─┘
-	//    │pauseEnded      │onclose           │pauseEnded    │onclose 
-	//  ┌┴────────┴┐              ┌┴───────┴───┐
-	//  │23                  ├──────→│27                      │
-	//  └──────────┘resumeEnded   └────────────┘
-	//    ↑                    pause()      pause()↑  error response↑  
-	//    │error resopnse            error response├──┬──┐    │  
-	//  ┌┴┐                                    ┌┴┐┌┴┐┌┴┐┌┴┐
-	//  │3 │                                    │4 ││5 ││6 ││7 │
-	//  └─┘                                    └─┘└─┘└─┘└─┘
-	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-	//  ┌───────────────────────────────┐
-	//  │0(disconnected)                                               │
-	//  └───────────────────────────────┘
-	//    ↑                                    ↑    ┌────────┐
-	//    │                                    │┌→│2(connected)    │
-	//    │                                    ││  └────────┘
-	//    │                    ┌─┐          ││'e' response    ┌─┐
-	//    │                ┌→│ 8│          ││            ┌→│ 8│
-	//    │                │  └─┘          ││            │  └─┘
-	//    │onclose         │※1        onclose││            │※1     
-	//  ┌┴────────┴┐              ┌┴┴──────┴───┐
-	//  │34                  ├──────→│36                      │
-	//  └──────────┘'s' response  └────────────┘
-	//    ↑                    'e'              'e'↑                ↑  
-	//    │pauseEnded                    pauseEnded│      pauseEnded│  
-	//  ┌┴┐                                    ┌┴┐            ┌┴┐
-	//  │4 │                                    │5 │            │6 │
-	//  └─┘                                    └─┘            └─┘
-	//                                    ※1 error response・disconnect()
-	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-	var state_ = 0;
-	var socket_;
-	var reason_;
-	var checkIntervalTimeoutTimerId_ = null;
-	var interlock_ = false;
-	var recorder_ = window.Recorder || null;
-
+	let state_ = 0;
+	let socket_;
+	let reason_;
+	let checkIntervalTimeoutTimerId_ = null;
+	let interlock_ = false;
+	let recorder_ = Recorder || null;
 	if (recorder_) {
 		// 録音ライブラリのプロパティの設定
 		recorder_.downSampling = true;
 
-		// 録音の開始処理が完了した時に呼び出されます。
+		// 録音の開始処理が完了した時
 		recorder_.resumeEnded = function(samplesPerSec) {
 			wrp_.codec = "MSB" + (samplesPerSec / 1000 | 0) + "K";
 			if (wrp_.codecElement) wrp_.codecElement.value = wrp_.codec;
@@ -179,7 +95,7 @@ var Wrp = function() {
 			}
 		};
 
-		// 録音の開始処理が失敗した時または録音の停止処理が完了した時に呼び出されます。
+		// 録音の開始処理が失敗した時または録音の停止処理が完了した時
 		recorder_.pauseEnded = function(reason) {
 			if (state_ == 0) {
 				if (wrp_.feedDataResumeStarted) wrp_.feedDataResumeStarted();
@@ -226,7 +142,7 @@ var Wrp = function() {
 			}
 		};
 
-		// 音声データが録音された時に呼び出されます。
+		// 音声データが録音された時
 		recorder_.recorded = function(data, offset, length) {
 			if (state_ === 5) {
 				feedData__(data, offset, length);
@@ -246,7 +162,7 @@ var Wrp = function() {
 			if (wrp_.disconnectEnded) wrp_.disconnectEnded();
 			return true;
 		}
-		if (wrp_.serverURLElement) wrp_.serverURL = wrp_.serverURLElement.value;
+		if (wrp_.serverURLElement) wrp_.serverURL = wrp_.serverURLElement;
 		if (!wrp_.serverURL) {
 			if (wrp_.TRACE) wrp_.TRACE("ERROR: can't connect to WebSocket server (Missing server URL)");
 			if (wrp_.disconnectEnded) wrp_.disconnectEnded();
@@ -347,10 +263,11 @@ var Wrp = function() {
 				interlock_ = false;
 			}
 		};
+		// サーバーからのメッセージ受信時に発火
 		socket_.onmessage = function(event) {
 			if (wrp_.TRACE) wrp_.TRACE("-> " + event.data);
-			var tag = event.data[0];
-			var body = event.data.substring(2);
+			let tag = event.data[0];
+			let body = event.data.substring(2);
 			if (tag === 's') {
 				if (body) {
 					if (state_ === 2) {
@@ -554,7 +471,10 @@ var Wrp = function() {
 				if (wrp_.resultUpdated) wrp_.resultUpdated(body);
 			} else
 			if (tag === 'A') {
+				// 最終結果(json)の出力
 				if (wrp_.resultFinalized) wrp_.resultFinalized(body);
+				let recordingText = document.getElementById("recording-text");
+				recordingText.innerHTML = body;
 				startCheckIntervalTimeoutTimer_();
 			} else
 			if (tag === 'R') {
@@ -603,7 +523,6 @@ var Wrp = function() {
 				recorder_.resume();
 				return true;
 			}
-			// -->
 			return connect_();
 		}
 		if (state_ !== 2) {
@@ -621,22 +540,22 @@ var Wrp = function() {
 		return true;
 	}
 	function feedDataResume__(samplesPerSec) {
-		if (wrp_.grammarFileNamesElement) wrp_.grammarFileNames = wrp_.grammarFileNamesElement.value;
-		if (wrp_.profileIdElement) wrp_.profileId = wrp_.profileIdElement.value;
-		if (wrp_.profileWordsElement) wrp_.profileWords = wrp_.profileWordsElement.value;
-		if (wrp_.segmenterPropertiesElement) wrp_.segmenterProperties = wrp_.segmenterPropertiesElement.value;
-		if (wrp_.keepFillerTokenElement) wrp_.keepFillerToken = wrp_.keepFillerTokenElement.value;
-		if (wrp_.resultUpdatedIntervalElement) wrp_.resultUpdatedInterval = wrp_.resultUpdatedIntervalElement.value;
-		if (wrp_.extensionElement) wrp_.extension = wrp_.extensionElement.value;
-		if (wrp_.authorizationElement) wrp_.authorization = wrp_.authorizationElement.value;
-		if (wrp_.codecElement) wrp_.codec = wrp_.codecElement.value;
-		if (wrp_.resultTypeElement) wrp_.resultType = wrp_.resultTypeElement.value;
-		if (wrp_.checkIntervalTimeElement) wrp_.checkIntervalTime = wrp_.checkIntervalTimeElement.value;
+		if (wrp_.grammarFileNamesElement) wrp_.grammarFileNames = wrp_.grammarFileNamesElement;
+		if (wrp_.profileIdElement) wrp_.profileId = wrp_.profileIdElement;
+		if (wrp_.profileWordsElement) wrp_.profileWords = wrp_.profileWordsElement;
+		if (wrp_.segmenterPropertiesElement) wrp_.segmenterProperties = wrp_.segmenterPropertiesElement;
+		if (wrp_.keepFillerTokenElement) wrp_.keepFillerToken = wrp_.keepFillerTokenElement;
+		if (wrp_.resultUpdatedIntervalElement) wrp_.resultUpdatedInterval = wrp_.resultUpdatedIntervalElement;
+		if (wrp_.extensionElement) wrp_.extension = wrp_.extensionElement;
+		if (wrp_.authorizationElement) wrp_.authorization = wrp_.authorizationElement;
+		if (wrp_.codecElement) wrp_.codec = wrp_.codecElement;
+		if (wrp_.resultTypeElement) wrp_.resultType = wrp_.resultTypeElement;
+		if (wrp_.checkIntervalTimeElement) wrp_.checkIntervalTime = wrp_.checkIntervalTimeElement;
 		if (samplesPerSec) {
 			wrp_.codec = "MSB" + (samplesPerSec / 1000 | 0) + "K";
-			if (wrp_.codecElement) wrp_.codecElement.value = wrp_.codec;
+			if (wrp_.codecElement) wrp_.codecElement = wrp_.codec;
 		}
-		var command = "s ";
+		let command = "s ";
 		if (wrp_.codec) {
 			command += wrp_.codec;
 		} else {
@@ -674,7 +593,7 @@ var Wrp = function() {
 		if (wrp_.resultType) {
 			command += " resultType=" + wrp_.resultType;
 		}
-		socket_.send(command);
+		socket_.send(command); // commandの送信
 		if (wrp_.TRACE) wrp_.TRACE("<- " + command);
 		return true;
 	}
@@ -693,9 +612,9 @@ var Wrp = function() {
 			data[0] = 0x70; // 'p'
 			socket_.send(data);
 		} else {
-			var outData = new Uint8Array(length + 1);
+			let outData = new Uint8Array(length + 1);
 			outData[0] = 0x70; // 'p'
-			for (var i = 0; i < length; i++) {
+			for (let i = 0; i < length; i++) {
 				outData[1 + i] = data[offset + i];
 			}
 			socket_.send(outData);
@@ -715,7 +634,7 @@ var Wrp = function() {
 		return true;
 	}
 	function feedDataPause__() {
-		var command = "e";
+		let command = "e";
 		socket_.send(command);
 		if (wrp_.TRACE) wrp_.TRACE("<- " + command);
 		return true;
@@ -762,18 +681,18 @@ var Wrp = function() {
 			if (wrp_.TRACE) wrp_.TRACE("ERROR: can't issue service authorization (Unsupported XMLHttpRequest class)");
 			return false;
 		}
-		if (wrp_.issuerURLElement) wrp_.issuerURL = wrp_.issuerURLElement.value;
-		if (wrp_.sidElement) wrp_.sid = wrp_.sidElement.value;
-		if (wrp_.spwElement) wrp_.spw = wrp_.spwElement.value;
-		if (wrp_.epiElement) wrp_.epi = wrp_.epiElement.value;
+		if (wrp_.issuerURLElement) wrp_.issuerURL = wrp_.issuerURLElement;
+		if (wrp_.sidElement) wrp_.sid = wrp_.sidElement;
+		if (wrp_.spwElement) wrp_.spw = wrp_.spwElement;
+		if (wrp_.epiElement) wrp_.epi = wrp_.epiElement;
 		if (!wrp_.sid) {
 			if (wrp_.TRACE) wrp_.TRACE("ERROR: can't issue service authorization (Missing service id)");
 			alert("サービス ID が設定されていません。");
 			if (wrp_.sidElement) wrp_.sidElement.focus();
 			return false;
 		}
-		for (var i = 0; i < wrp_.sid.length; i++) {
-			var c = wrp_.sid.charCodeAt(i);
+		for (let i = 0; i < wrp_.sid.length; i++) {
+			let c = wrp_.sid.charCodeAt(i);
 			if (!(c >= 0x30 && c <= 0x39 || c >= 0x61 && c <= 0x7A || c >= 0x41 && c <= 0x5A || c === 0x2D || c === 0x5F)) {
 				if (wrp_.TRACE) wrp_.TRACE("ERROR: can't issue service authorization (Illegal char in service id)");
 				if (wrp_.sidElement) alert("サービス ID に許されていない文字が使用されています。");
@@ -787,8 +706,8 @@ var Wrp = function() {
 			if (wrp_.spwElement) wrp_.spwElement.focus();
 			return false;
 		}
-		for (var i = 0; i < wrp_.spw.length; i++) {
-			var c = wrp_.spw.charCodeAt(i);
+		for (let i = 0; i < wrp_.spw.length; i++) {
+			let c = wrp_.spw.charCodeAt(i);
 			if (c < 0x20 || c > 0x7E) {
 				if (wrp_.TRACE) wrp_.TRACE("ERROR: can't issue service authorization (Illegal char in service password)");
 				if (wrp_.spwElement) alert("サービスパスワードに許されていない文字が使用されています。");
@@ -796,8 +715,8 @@ var Wrp = function() {
 				return false;
 			}
 		}
-		for (var i = 0; i < wrp_.epi.length; i++) {
-			var c = wrp_.epi.charCodeAt(i);
+		for (let i = 0; i < wrp_.epi.length; i++) {
+			let c = wrp_.epi.charCodeAt(i);
 			if (c < 0x30 || c > 0x39) {
 				if (wrp_.TRACE) wrp_.TRACE("ERROR: can't issue service authorization (Illegal char in pexires in)");
 				if (wrp_.epiElement) alert("有効期限に許されていない文字が使用されています。");
@@ -806,11 +725,11 @@ var Wrp = function() {
 			}
 		}
 		if (wrp_.issueStarted) wrp_.issueStarted();
-		var searchParams = "sid=" + encodeURIComponent(wrp_.sid) + "&spw=" + encodeURIComponent(wrp_.spw);
+		let searchParams = "sid=" + encodeURIComponent(wrp_.sid) + "&spw=" + encodeURIComponent(wrp_.spw);
 		if (wrp_.epi) {
 			searchParams += "&epi=" + encodeURIComponent(wrp_.epi);
 		}
-		var httpRequest = new XMLHttpRequest();
+		let httpRequest = new XMLHttpRequest();
 		httpRequest.addEventListener("load", function(e) {
 			if (e.target.status === 200) {
 				if (wrp_.serviceAuthorizationElement) {
@@ -850,15 +769,14 @@ var Wrp = function() {
 	if (wrp_.serverURL.endsWith("/tool/")) {
 		wrp_.serverURL = wrp_.serverURL.substring(0, wrp_.serverURL.length - 5);
 	}
-	wrp_.serverURL += "/";
+	wrp_.serverURL += "/"; // > 'http://localhost:3000/recordings/'
 	wrp_.grammarFileNames = "-a-general";
 	wrp_.issuerURL = window.location.protocol + "//" + window.location.host + window.location.pathname;
 	wrp_.issuerURL = wrp_.issuerURL.substring(0, wrp_.issuerURL.lastIndexOf('/'));
 	if (wrp_.issuerURL.indexOf("/tool", wrp_.issuerURL.length - 5) !== -1) {
 		wrp_.issuerURL = wrp_.issuerURL.substring(0, wrp_.issuerURL.length - 5);
 	}
-	wrp_.issuerURL += "/issue_service_authorization";
-
+	wrp_.issuerURL += "/issue_service_authorization"; // > 'http://localhost:3000/recordings/issue_service_authorization'
 	// public オブジェクトの返却
 	return wrp_;
 }();

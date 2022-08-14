@@ -14,5 +14,8 @@
     <%= f.label :length %>
     <%= f.text_field :length, class: 'form-control', id: 'recording-length', value: '30' %>
   </div>
-  <%= f.submit t('defaults.stop_recording'), class: 'btn btn-primary', id: 'stop-recording' %>
+  <div id="start-recording" class="btn btn-primary" >
+    <%= t('defaults.start_recording') %>
+  </div>
+  <%= f.submit t('defaults.stop_recording'), class: 'btn btn-primary display-none', id: 'stop-recording' %>
 <% end %>

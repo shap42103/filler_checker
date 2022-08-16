@@ -1,181 +1,134 @@
 (function() {
-  // <!--
-  function log_(n, s) {
-    console.log(n + s);
-    var color = "";
-    if (s.lastIndexOf("EVENT: ", 0) != -1) {
-//    color = "green";
-    } else
-    if (s.lastIndexOf("INFO: ", 0) != -1) {
-//    color = "blue";
-    } else
-    if (s.lastIndexOf("ERROR: ", 0) != -1) {
-      color = "red";
-    } else {
-      color = "black";
-    }
-    if (color) {
-      if (messages.childNodes.length >= 20) {
-        messages.removeChild(messages.lastChild);
-      }
-      messages.insertBefore(document.createElement("div"), messages.firstChild).innerHTML = n + s;
-      messages.firstChild.style.borderBottom = "1px #ddd solid";
-      messages.firstChild.style.color = color;
-    }
+  // ------
+  // common
+  // ------
+  // 特殊文字をエスケープ
+  function sanitize_(text) {
+    return text.replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/'/g, '&apos;')
+      .replace(/"/g, '&quot;');
   }
-  function sanitize_(s) {
-    return s.replace(/&/g, '&amp;')
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;')
-            .replace(/'/g, '&apos;')
-            .replace(/"/g, '&quot;');
+  // ------
+  // ログ出力関係
+  // ------
+  function log_(name, state) {
+    // let type = "";
+    // if (state.lastIndexOf("EVENT: ", 0) != -1) {
+    //   type = "event"
+    // } else if (state.lastIndexOf("INFO: ", 0) != -1) {
+    //   type = "info"
+    // } else if (state.lastIndexOf("ERROR: ", 0) != -1) {
+    //   type = "error";
+    // }
+    console.log(name + state);
   }
-  // -->
-  // 音声認識サーバへの接続処理が開始した時に呼び出されます。
+  // 音声認識サーバへの接続処理が開始した時
   function connectStarted() {
     log_(this.name, "EVENT: connectStarted()");
   }
-
-  // 音声認識サーバへの接続処理が完了した時に呼び出されます。
+  // 音声認識サーバへの接続処理が完了した時
   function connectEnded() {
     log_(this.name, "EVENT: connectEnded()");
   }
-
-  // 音声認識サーバからの切断処理が開始した時に呼び出されます。
+  // 音声認識サーバからの切断処理が開始した時
   function disconnectStarted() {
     log_(this.name, "EVENT: disconnectStarted()");
   }
-
-  // 音声認識サーバからの切断処理が完了した時に呼び出されます。
+  // 音声認識サーバからの切断処理が完了した時
   function disconnectEnded() {
     log_(this.name, "EVENT: disconnectEnded()");
-    // ボタンの制御
-    resumePauseButton.innerHTML = "録音の開始";
-    resumePauseButton.disabled = false;
-    resumePauseButton.classList.remove("sending");
   }
-
-  // 音声認識サーバへの音声データの供給開始処理が開始した時に呼び出されます。
+  // 音声認識サーバへの音声データの供給開始処理が開始した時
   function feedDataResumeStarted() {
     log_(this.name, "EVENT: feedDataResumeStarted()");
   }
-
-  // 音声認識サーバへの音声データの供給開始処理が完了した時に呼び出されます。
+  // 音声認識サーバへの音声データの供給開始処理が完了した時
   function feedDataResumeEnded() {
     log_(this.name, "EVENT: feedDataResumeEnded()");
-    // ボタンの制御
-    resumePauseButton.innerHTML = "<br><br>音声データの録音中...<br><br><span class=\"supplement\">クリック → 録音の停止</span>";
-    resumePauseButton.disabled = false;
-    resumePauseButton.classList.add("sending");
   }
-
-  // 音声認識サーバへの音声データの供給終了処理が開始した時に呼び出されます。
+  // 音声認識サーバへの音声データの供給終了処理が開始した時
   function feedDataPauseStarted() {
     log_(this.name, "EVENT: feedDataPauseStarted()");
   }
-
-  // 音声認識サーバへの音声データの供給終了処理が完了した時に呼び出されます。
+  // 音声認識サーバへの音声データの供給終了処理が完了した時
   function feedDataPauseEnded(reason) {
     log_(this.name, "EVENT: feedDataPauseEnded(): reason[code[" + reason.code + "] message[" + reason.message + "]]");
   }
-
-  // 発話区間の始端が検出された時に呼び出されます。
+  // 発話区間の始端が検出された時
   function utteranceStarted(startTime) {
     log_(this.name, "EVENT: utteranceStarted(): endTime[" + startTime + "]");
   }
-
-  // 発話区間の終端が検出された時に呼び出されます。
+  // 発話区間の終端が検出された時
   function utteranceEnded(endTime) {
     log_(this.name, "EVENT: utteranceEnded(): endTime[" + endTime + "]");
   }
-
-  // 認識処理が開始された時に呼び出されます。
-  function resultCreated() {
-    log_(this.name, "EVENT: resultCreated()");
-    this.recognitionResultText.innerHTML = "...";
-    this.recognitionResultInfo.innerHTML = "";
-    this.startTime = new Date().getTime();
-  }
-
-  // 認識処理中に呼び出されます。
-  function resultUpdated(result) {
-    log_(this.name, "EVENT: resultUpdated(): result[" + result + "]");
-    result = Result.parse(result);
-    var text = (result.text) ? sanitize_(result.text) : "...";
-    this.recognitionResultText.innerHTML = text;
-  }
-
-  // 認識処理が確定した時に呼び出されます。
-  function resultFinalized(result) {
-    log_(this.name, "EVENT: resultFinalized(): result[" + result + "]");
-    result = Result.parse(result);
-    var text = (result.text) ? sanitize_(result.text) : (result.code != 'o' && result.message) ? "<font color=\"gray\">(" + result.message + ")</font>" : "<font color=\"gray\">(なし)</font>";
-    var duration = result.duration;
-    var elapsedTime = new Date().getTime() - this.startTime;
-    var confidence = result.confidence;
-    var rt = ((duration > 0) ? (elapsedTime / duration).toFixed(2) : "-") + " (" + (elapsedTime / 1000).toFixed(2) + "/" + ((duration > 0) ? (duration / 1000).toFixed(2) : "-") + ")";
-    var cf = (confidence >= 0.0) ? confidence.toFixed(2) : "-";
-    this.recognitionResultText.innerHTML = text;
-    this.recognitionResultInfo.innerHTML = "RT: " + rt + "<br>CF: " + cf;
-    log_(this.name, text + " <font color=\"darkgray\">(RT: " + rt + ") (CF: " + cf + ")</font>");
-  }
-
-  // 各種イベントが通知された時に呼び出されます。
+  // 各種イベントが通知された時
   function eventNotified(eventId, eventMessage) {
     log_(this.name, "EVENT: eventNotified(): eventId[" + eventId + "] eventMessage[" + eventMessage + "]");
   }
-
-  // メッセージの出力が要求された時に呼び出されます。
+  // メッセージの出力が要求された時
   function TRACE(message) {
     log_(this.name || "", message);
   }
+  // ------ 
+  // 音声認識処理関係
+  // ------
+  // 認識処理が開始された時
+  function resultCreated() {
+    log_(this.name, "EVENT: resultCreated()");
+    this.startTime = new Date().getTime();
+  }
+  // 認識処理中
+  function resultUpdated(result) {
+    log_(this.name, "EVENT: resultUpdated(): result[" + result + "]");
+    result = Result.parse(result);
+  }
+  // 認識処理が確定した時
+  function resultFinalized(result) {
+    log_(this.name, "EVENT: resultFinalized(): result[" + result + "]");
+    let finalResult = Result.parse(result);
+    let text = (finalResult.text) ? sanitize_(finalResult.text) : (finalResult.code != 'o' && finalResult.message) ? "<font color=\"gray\">(" + finalResult.message + ")</font>" : "<font color=\"gray\">(なし)</font>"; // 結合テキストがあれば返す、なければメッセージ、それもなければなし
+    let duration = finalResult.duration;
+    let elapsedTime = new Date().getTime() - this.startTime;
+    let confidence = finalResult.confidence;
+    let rt =
+      ((duration > 0) ? (elapsedTime / duration).toFixed(2) : "-") +
+      " (" + (elapsedTime / 1000).toFixed(2) +
+      "/" +
+      ((duration > 0) ? (duration / 1000).toFixed(2) : "-") + ")";
+    let cf = (confidence >= 0.0) ? confidence.toFixed(2) : "-"; // toFixed(x) 小数点x桁になるよう四捨五入
+    log_(this.name, text + " <font color=\"darkgray\">(RT: " + rt + ") (CF: " + cf + ")</font>");
+  }
 
+  // ------
+  // main
+  // ------
   // 画面要素の取得
-  var issuerURL = document.getElementById("issuerURL");
-  var sid = document.getElementById("sid");
-  var spw = document.getElementById("spw");
-  var epi = document.getElementById("epi");
-  var issueButton = document.getElementById("issueButton");
-  var grammarFileNames = document.getElementsByClassName("grammarFileNames");
-  var recognitionResultText = document.getElementsByClassName("recognitionResultText");
-  var recognitionResultInfo = document.getElementsByClassName("recognitionResultInfo");
-
-  // 画面要素の初期化
-  issuerURL.value = "https://acp-api.amivoice.com/issue_service_authorization";
-  serverURL.value = "wss://acp-api.amivoice.com/v1/";
-  grammarFileNames[0].value = Wrp.grammarFileNames;
-  profileId.value = Wrp.profileId;
-  profileWords.value = Wrp.profileWords;
-  segmenterProperties.value = Wrp.segmenterProperties;
-  keepFillerToken.value = Wrp.keepFillerToken;
-  resultUpdatedInterval.value = Wrp.resultUpdatedInterval;
-  extension.value = Wrp.extension;
-  authorization.value = Wrp.authorization;
-  codec.value = Wrp.codec;
-  resultType.value = Wrp.resultType;
-  checkIntervalTime.value = Wrp.checkIntervalTime;
-  maxRecordingTime.value = Recorder.maxRecordingTime;
+  let startButton = document.getElementById("start-recording");
+  let stopButton = document.getElementById("stop-recording");
+  let showResultButton = document.getElementById("show-result");
+  let recordingTheme = document.getElementById("recording_theme_title");
+  let recordingLength = document.getElementById("recording_length");
+  let startSec = 0;
+  let endSec = 0;
 
   // 音声認識ライブラリのプロパティ要素の設定
-  Wrp.serverURLElement = serverURL;
-  Wrp.grammarFileNamesElement = grammarFileNames[0];
-  Wrp.profileIdElement = profileId;
-  Wrp.profileWordsElement = profileWords;
-  Wrp.segmenterPropertiesElement = segmenterProperties;
-  Wrp.keepFillerTokenElement = keepFillerToken;
-  Wrp.resultUpdatedIntervalElement = resultUpdatedInterval;
-  Wrp.extensionElement = extension;
-  Wrp.authorizationElement = authorization;
-  Wrp.codecElement = codec;
-  Wrp.resultTypeElement = resultType;
-  Wrp.checkIntervalTimeElement = checkIntervalTime;
-  Wrp.issuerURLElement = issuerURL;
-  Wrp.sidElement = sid;
-  Wrp.spwElement = spw;
-  Wrp.epiElement = epi;
+  Wrp.serverURLElement = "wss://acp-api.amivoice.com/v1/";
+  Wrp.grammarFileNamesElement = Wrp.grammarFileNames;
+  Wrp.profileIdElement = Wrp.profileId;
+  Wrp.profileWordsElement = Wrp.profileWords;
+  Wrp.segmenterPropertiesElement = Wrp.segmenterProperties;
+  Wrp.keepFillerTokenElement = Wrp.keepFillerToken;
+  Wrp.resultUpdatedIntervalElement = Wrp.resultUpdatedInterval;
+  Wrp.extensionElement = Wrp.extension;
+  Wrp.authorizationElement = Wrp.authorization;
+  Wrp.codecElement = Wrp.codec;
+  Wrp.resultTypeElement = Wrp.resultType;
+  Wrp.checkIntervalTimeElement = Wrp.checkIntervalTime;
+  Wrp.issuerURLElement = "https://acp-api.amivoice.com/issue_service_authorization";
   Wrp.name = "";
-  Wrp.recognitionResultText = recognitionResultText[0];
-  Wrp.recognitionResultInfo = recognitionResultInfo[0];
 
   // 音声認識ライブラリのイベントハンドラの設定
   Wrp.connectStarted = connectStarted;
@@ -195,61 +148,33 @@
   Wrp.TRACE = TRACE;
 
   // 録音ライブラリのプロパティ要素の設定
-  Recorder.maxRecordingTimeElement = maxRecordingTime;
+  Recorder.maxRecordingTimeElement = Recorder.maxRecordingTime;
 
-  // 音声認識ライブラリ／録音ライブラリのメソッドの画面要素への登録
-  resumePauseButton.onclick = function() {
-    // 音声認識サーバへの音声データの供給中かどうかのチェック
-    if (Wrp.isActive()) {
-      // 音声認識サーバへの音声データの供給中の場合...
-      // 音声認識サーバへの音声データの供給の停止
-      Wrp.feedDataPause();
-
-      // ボタンの制御
-      resumePauseButton.disabled = true;
-    } else {
-      // 音声認識サーバへの音声データの供給中でない場合...
-      // グラマファイル名が指定されているかどうかのチェック
+  // 録音開始／停止ボタンによる発火イベント
+  startButton.onclick = function() {
+    startSec = new Date().getTime()/1000;
+    if (!Wrp.isActive()) {
       if (Wrp.grammarFileNamesElement.value != "") {
-        // グラマファイル名が指定されている場合...
-        // 音声認識サーバへの音声データの供給の開始
         Wrp.feedDataResume();
-
-        // ボタンの制御
-        resumePauseButton.disabled = true;
-      } else {
-        // グラマファイル名が指定されていない場合...
-        // (何もしない)
+        startButton.classList.add("display-none");
+        stopButton.classList.remove("display-none");
+        recordingTheme.disabled = true;
       }
     }
   };
-  issueButton.onclick = Wrp.issue;
-
-  var issue_options = document.querySelectorAll(".issue_options");
-  function toggle_issue_options() {
-    issue_options[0].style.display = (issue_options[0].style.display === "") ? "none" : "";
-    for (var i = 1; i < issue_options.length; i++) {
-      issue_options[i].style.display = issue_options[0].style.display;
+  stopButton.onclick = function() {
+    showResultButton.classList.remove("display-none");
+    stopButton.classList.add("display-none");
+    if (Wrp.isActive()) {
+      Wrp.feedDataPause();
     }
+    endSec = new Date().getTime()/1000;
+    let elapsedSec = (endSec - startSec).toFixed(0);
+    recordingLength.value = elapsedSec;
+    startSec = 0;
+    endSec = 0;
+  };
+  showResultButton.onclick = function() {
+    recordingTheme.disabled = false;
   }
-  var toggle_issue_optionss = document.querySelectorAll(".toggle_issue_options");
-  for (var i = 0; i < toggle_issue_optionss.length; i++) {
-    toggle_issue_optionss[i].onclick = toggle_issue_options;
-    toggle_issue_optionss[i].style.cursor = "pointer";
-  }
-
-  var options = document.querySelectorAll(".options");
-  function toggle_options() {
-    options[0].style.display = (options[0].style.display === "") ? "none" : "";
-    for (var i = 1; i < options.length; i++) {
-      options[i].style.display = options[0].style.display;
-    }
-  }
-  var toggle_optionss = document.querySelectorAll(".toggle_options");
-  for (var i = 0; i < toggle_optionss.length; i++) {
-    toggle_optionss[i].onclick = toggle_options;
-    toggle_optionss[i].style.cursor = "pointer";
-  }
-
-  version.innerHTML = Wrp.version;
 })();

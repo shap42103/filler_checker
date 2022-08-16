@@ -1,0 +1,26 @@
+<h2><%= t('.new_challenge') %></h2>
+<%= link_to t('defaults.challenge'), new_recording_path, class: '' %>
+<h2><%= t('.log') %></h2>
+
+<table class="table">
+  <thead class="thead-light">
+    <tr>
+      <th>話題</th>
+      <th>フィラー回数</th>
+      <th>フィラー頻度</th>
+      <th>挑戦者名</th>
+      <th>録音日時</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @results.each do |result| %>
+      <tr>
+        <th scope="row"><%= result.recording.theme[:title] %></th>
+        <td><%= result.filler_count %></td>
+        <td><%= "#{(result.recording[:length]/result.filler_count.to_f).round(1)}秒に１回" %></td>
+        <td><%= result.recording.user[:name] %></td>
+        <td><%= I18n.l(result.created_at) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

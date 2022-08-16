@@ -1,18 +1,24 @@
 <%= form_with model: @recording, local: true do |f| %>
-  <%#= render 'shared/error_messages', object: f.object %>
+  <%= render 'shared/error_messages', object: f.object %>
   <div class="form-group">
-    <%= f.label :voice %>
-    <%= f.text_field :voice, class: 'form-control', id: 'recording-voice' %>
-    <%= f.label :text %>
-    <%= f.text_area :text, class: 'form-control', id: 'recording-text' %>
-    <%= f.label :length %>
-    <%= f.text_field :length, class: 'form-control', id: 'recording-length', value: '30' %>
     <%= f.fields_for :theme do |ft| %>
       <div class="form-group">
         <%= ft.label Theme.human_attribute_name(:title) %>
         <%= ft.collection_select :title, @themes, :title, :title, class: 'form-control', id: 'theme-title' %>
       </div>
     <% end %>
+    <%= f.label :voice %>
+    <%= f.text_field :voice, class: 'form-control', value: 'recording_data' %> <%# 未実装。録音データを格納する。 %>
+    <%= f.label :text %>
+    <%= f.text_area :text, class: 'form-control' %>
+    <%= f.label :length %>
+    <%= f.text_field :length, class: 'form-control' %>
   </div>
-  <%= f.submit t('defaults.stop_recording'), class: 'btn btn-primary', id: 'stop-recording' %>
+  <div id="start-recording" class="btn btn-primary" >
+    <%= t('defaults.start_recording') %>
+  </div>
+  <div id="stop-recording" class="btn btn-primary display-none" >
+    <%= t('defaults.stop_recording') %>
+  </div>
+  <%= f.submit t('defaults.show_result'), class: 'btn btn-primary display-none', id: 'show-result' %>
 <% end %>

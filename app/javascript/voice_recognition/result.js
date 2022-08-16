@@ -1,6 +1,5 @@
-var Result = function() {
-	var result_ = {
-		version: "Result/1.0.04",
+let Result = function() {
+	let result_ = {
 		parse: parse_,
 		parseJSON: parseJSON_,
 		parseTEXT: parseTEXT_,
@@ -17,10 +16,10 @@ var Result = function() {
 				return parseRAW_(result);
 			}
 		}
-	}
+	} // "\x01" = " "
 
 	function parseJSON_(result) {
-		var json = JSON.parse(result);
+		let json = JSON.parse(result);
 		json.duration = (json.results && json.results[0]) ? json.results[0].endtime : 0;
 		json.confidence = (json.results && json.results[0]) ? json.results[0].confidence : -1.0;
 		return json;
@@ -37,15 +36,15 @@ var Result = function() {
 	}
 
 	function parseRAW_(result) {
-		var local = {
+		let local = {
 			buffer: "",
 			bufferEnding: 0
 		};
-		var fields = result.split("\x01");
-		var fields0 = fields[0].split("|");
-		var i, j;
+		let fields = result.split("\x01");
+		let fields0 = fields[0].split("|");
+		let i, j;
 		for (i = 0; i < fields0.length; i++) {
-			var written = fields0[i];
+			let written = fields0[i];
 			if ((j = written.indexOf(" ")) != -1) {
 				written = written.slice(0, j);
 			}
@@ -73,9 +72,9 @@ var Result = function() {
 		if (item == "<->") {
 			return;
 		}
-		var itemState = 0;
-		for (var i = 0; i < item.length; i++) {
-			var c = item.charCodeAt(i);
+		let itemState = 0;
+		for (let i = 0; i < item.length; i++) {
+			let c = item.charCodeAt(i);
 			if (itemState == 0) {
 				if (c == 0x005F) {
 					break;
@@ -135,11 +134,11 @@ var Result = function() {
 			}
 		}
 		item = item.replace(/_/g, " ");
-		var itemBeginningChar = item.charCodeAt(0);
-		var itemEndingChar = (item.length > 1) ? item.charCodeAt(item.length - 1) : 0;
+		let itemBeginningChar = item.charCodeAt(0);
+		let itemEndingChar = (item.length > 1) ? item.charCodeAt(item.length - 1) : 0;
 		if (local.bufferEnding == 0) {
-			var itemBeginning;
-			var c = itemBeginningChar;
+			let itemBeginning;
+			let c = itemBeginningChar;
 			if (c == 0x0020) {
 				itemBeginning = 0;
 			} else
@@ -171,8 +170,8 @@ var Result = function() {
 				}
 			}
 		} else {
-			var itemBeginning;
-			var c = itemBeginningChar;
+			let itemBeginning;
+			let c = itemBeginningChar;
 			if (c == 0x0020) {
 				itemBeginning = 0;
 			} else
@@ -274,6 +273,5 @@ var Result = function() {
 			local.bufferEnding = 7;
 		}
 	}
-
 	return result_;
 }();

@@ -21,7 +21,7 @@ class TextAnalysisCollection
   end
 
   def filler?(word)
-    return true if word.include?('先')
+    return true if word.include?('%')
     return false
   end
 

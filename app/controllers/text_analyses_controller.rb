@@ -1,10 +1,13 @@
 class TextAnalysesController < ApplicationController
   
-  def new
+  def new(words = [])
     @recording = Recording.find(params[:recording_id])
-    @hash = JSON.parse(@recording.text)
-    @words = @hash['results'][0]['tokens']
-    @text_analyses = TextAnalysisCollection.new(@words, action_name)
+    texts = @recording.text.split("/-/-/")
+    texts.each do |text|
+      hash = JSON.parse(text)
+      words += hash['results'][0]['tokens']
+    end
+    @text_analyses = TextAnalysisCollection.new(words, action_name)
   end
   
   def create
@@ -14,7 +17,7 @@ class TextAnalysesController < ApplicationController
       redirect_to new_recording_result_path(params[:recording_id])
     else
       flash.now[:danger] = t('.failed')
-      render :new
+      redirect_to new_recording_path, danger: t('defaults.message.failed_analyze')
     end
   end
 end

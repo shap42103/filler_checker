@@ -265,7 +265,7 @@ let Wrp = function() {
 		};
 		// サーバーからのメッセージ受信時に発火
 		socket_.onmessage = function(event) {
-			if (wrp_.TRACE) wrp_.TRACE("-> " + event.data);
+			// if (wrp_.TRACE) wrp_.TRACE("-> " + event.data);
 			let tag = event.data[0];
 			let body = event.data.substring(2);
 			if (tag === 's') {
@@ -473,8 +473,8 @@ let Wrp = function() {
 			if (tag === 'A') {
 				// 最終結果(json)の出力
 				if (wrp_.resultFinalized) wrp_.resultFinalized(body);
-				let recordingText = document.getElementById("recording-text");
-				recordingText.innerHTML = body;
+				let recordingText = document.getElementById("recording_text");
+				recordingText.innerHTML += body + "/-/-/";
 				startCheckIntervalTimeoutTimer_();
 			} else
 			if (tag === 'R') {
@@ -594,7 +594,7 @@ let Wrp = function() {
 			command += " resultType=" + wrp_.resultType;
 		}
 		socket_.send(command); // commandの送信
-		if (wrp_.TRACE) wrp_.TRACE("<- " + command);
+		// if (wrp_.TRACE) wrp_.TRACE("<- " + command);
 		return true;
 	}
 
@@ -636,7 +636,7 @@ let Wrp = function() {
 	function feedDataPause__() {
 		let command = "e";
 		socket_.send(command);
-		if (wrp_.TRACE) wrp_.TRACE("<- " + command);
+		// if (wrp_.TRACE) wrp_.TRACE("<- " + command);
 		return true;
 	}
 

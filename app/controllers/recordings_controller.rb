@@ -6,14 +6,13 @@ class RecordingsController < ApplicationController
 
   def create
     @recording = current_user.recordings.new(recording_params)
-
+    
     theme_title = theme_params[:theme].fetch(:title)
     @recording.set_theme(theme_title)
 
     if @recording.save
       redirect_to new_recording_text_analysis_path(@recording), success: t('.success')
     else
-      flash.now[:danger] = t('.failed')
       @themes = Theme.all
       render :new
     end

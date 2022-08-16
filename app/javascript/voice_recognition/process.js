@@ -14,15 +14,14 @@
   // ログ出力関係
   // ------
   function log_(name, state) {
-    console.log(name + state);
-    let type = "";
-    if (state.lastIndexOf("EVENT: ", 0) != -1) {
-      type = "event"
-    } else if (state.lastIndexOf("INFO: ", 0) != -1) {
-      type = "info"
-    } else if (state.lastIndexOf("ERROR: ", 0) != -1) {
-      type = "error";
-    }
+    // let type = "";
+    // if (state.lastIndexOf("EVENT: ", 0) != -1) {
+    //   type = "event"
+    // } else if (state.lastIndexOf("INFO: ", 0) != -1) {
+    //   type = "info"
+    // } else if (state.lastIndexOf("ERROR: ", 0) != -1) {
+    //   type = "error";
+    // }
     console.log(name + state);
   }
   // 音声認識サーバへの接続処理が開始した時
@@ -109,7 +108,11 @@
   // 画面要素の取得
   let startButton = document.getElementById("start-recording");
   let stopButton = document.getElementById("stop-recording");
+  let showResultButton = document.getElementById("show-result");
   let recordingTheme = document.getElementById("recording_theme_title");
+  let recordingLength = document.getElementById("recording_length");
+  let startSec = 0;
+  let endSec = 0;
 
   // 音声認識ライブラリのプロパティ要素の設定
   Wrp.serverURLElement = "wss://acp-api.amivoice.com/v1/";
@@ -149,6 +152,7 @@
 
   // 録音開始／停止ボタンによる発火イベント
   startButton.onclick = function() {
+    startSec = new Date().getTime()/1000;
     if (!Wrp.isActive()) {
       if (Wrp.grammarFileNamesElement.value != "") {
         Wrp.feedDataResume();
@@ -159,11 +163,18 @@
     }
   };
   stopButton.onclick = function() {
-    startButton.classList.remove("display-none");
+    showResultButton.classList.remove("display-none");
     stopButton.classList.add("display-none");
-    recordingTheme.disabled = false;
     if (Wrp.isActive()) {
       Wrp.feedDataPause();
     }
+    endSec = new Date().getTime()/1000;
+    let elapsedSec = (endSec - startSec).toFixed(0);
+    recordingLength.value = elapsedSec;
+    startSec = 0;
+    endSec = 0;
   };
+  showResultButton.onclick = function() {
+    recordingTheme.disabled = false;
+  }
 })();

@@ -13,7 +13,7 @@ FactoryBot.define do
       filler { nil }
     end
     
-    trait : :blank_word do
+    trait :blank_word do
       word { nil }
       filler { false }
     end

@@ -1,0 +1,13 @@
+<li class="nav-item dropdown dropdown-slide">
+  <a href="#" class="nav-link me-2" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
+    <%= image_tag 'icon_user', class: "icon rounded-circle me-2" %>
+  </a>
+  <div class="dropdown-menu dropdown-menu-lg-end">
+    <div class="dropdown-item"><%= current_user.name %></div>
+    <div class="dropdown-divider"></div>
+    <%= link_to t('defaults.my_page'), results_path, class: 'dropdown-item' %>
+    <%= link_to t('defaults.account_setting'), '#', class: 'dropdown-item' %>
+    <div class="dropdown-divider"></div>
+    <%= button_to t('defaults.logout'), logout_path, class: 'dropdown-item', method: :delete %>
+  </div>
+</li>

@@ -1,26 +1,43 @@
-<h2><%= t('.new_challenge') %></h2>
-<%= link_to t('defaults.challenge'), new_recording_path, class: '' %>
-<h2><%= t('.log') %></h2>
+<div class="container mt-5">
+  <p class="h2 text-center"><%= t('.log') %></p>
+  <div class="d-flex justify-content-center mt-3">
+    <%= link_to t('.new_challenge'), new_recording_path, class: 'btn btn-warning btn-circle col-4' %>
+  </div>
+  <div class="d-flex justify-content-center mt-5">
+    <div class="col-10">
+      <canvas id="frequencyChart"></canvas>
+    </div>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js" integrity="sha512-ElRFoEQdI5Ht6kZvyzXhYG9NqjtkmlkfYk0wr6wHxU9JEHakS7UJZNeml5ALk+8IKlU6jDgMabC3vkumRokgJA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-<table class="table">
-  <thead class="thead-light">
-    <tr>
-      <th>話題</th>
-      <th>フィラー回数</th>
-      <th>フィラー頻度</th>
-      <th>挑戦者名</th>
-      <th>録音日時</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @results.each do |result| %>
-      <tr>
-        <th scope="row"><%= result.recording.theme[:title] %></th>
-        <td><%= result.filler_count %></td>
-        <td><%= "#{(result.recording[:length]/result.filler_count.to_f).round(1)}秒に１回" %></td>
-        <td><%= result.recording.user[:name] %></td>
-        <td><%= I18n.l(result.created_at) %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+  <div class="d-flex justify-content-center mt-5">
+    <div class="col-8">
+      <table class="table styled-table">
+        <thead class="thead-light">
+          <tr>
+            <th><%= Theme.human_attribute_name(:title) %></th>
+            <th><%= Result.human_attribute_name(:filler_count) %></th>
+            <th><%= t('.frequency') %></th>
+            <th class="display-none"><%= t('.frequency_per_second') %></th>
+            <th><%= User.human_attribute_name(:name) %></th>
+            <th><%= t('.recording_date') %></th>
+
+          </tr>
+        </thead>
+        <tbody id="result-table-body">
+          <% @results.each do |result| %>
+            <tr>
+              <th scope="row"><%= result.recording.theme[:title] %></th>
+              <td><%= result.filler_count %></td>
+              <td><%= "#{(result.recording[:length]/result.filler_count.to_f).round(1)}#{t('.per_count')}" %></td>
+              <td class="frequency display-none"><%= "#{(result.filler_count.to_f/result.recording[:length]).round(3)}" %></td>
+              <td><%= result.recording.user[:name] %></td>
+              <td class="created_at"><%= I18n.l(result.created_at) %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<%= javascript_include_tag "frequencyChart" %>

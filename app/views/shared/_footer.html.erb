@@ -1,18 +1,12 @@
-<footer id='footer' class="footer-bottom">
+<footer class="footer-bottom footer-color mt-3 pt-3 pb-3">
   <div class="container">
     <div class="row">
-
-      <div class="col-sm-1 col-12">
-        <%= link_to t('.terms'), terms_path %>
+      <div class="col-2 d-flex flex-column">
+        <%= link_to t('defaults.terms'), terms_path, class: 'footer_link text-center' %>
+        <%= link_to t('defaults.privacy'), privacy_path, class: 'footer_link text-center' %>
       </div>
-      <div class="col-sm-1 col-12">
-        <%= link_to t('.privacy'), privacy_path %>
-      </div>
-
-      <div class="col-sm-6 col-12">
-        <div class="copyright">
-          <p>Copyright © 2022. filler checker</p>
-        </div>
+      <div class="col-10 d-flex justify-content-end flex-column align-items-end">
+        <div>Copyright © 2022. filler checker</div>
       </div>
     </div>
   </div>

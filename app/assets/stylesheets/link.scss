@@ -1,0 +1,27 @@
+.footer_link {
+	padding: 0.1em 0.3em;
+	position: relative;
+	display: inline-block;
+	transition: .3s;
+	color: #000000;
+  text-decoration: none;
+}
+
+.footer_link::after {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	content: '';
+	width: 0;
+	height: 1px;
+	background-color: #8B8680;
+	transition: .3s;
+}
+
+.footer_link:hover {
+	color: #8B8680;
+}
+
+.footer_link:hover::after {
+	width: 100%;
+}

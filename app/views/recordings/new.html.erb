@@ -3,7 +3,14 @@
 <%= javascript_include_tag "voice_recognition/wrp.js" %>
 <%= javascript_include_tag "voice_recognition/result.js" %>
 
-<%= render 'form' %>
-<%= link_to t('defaults.restart_recording'), new_recording_path, class: "btn btn-danger" %>
+<% content_for(:title, t('.title')) %>
+<div class="container mt-5">
+  <p class="h2"><%= t('.choose_theme') %></p>
+  <%= render 'form' %>
+  <div class="d-flex justify-content-center">
+    <%= image_tag 'meeting', class: "img-fluid col-4" %>
+    <%= image_tag 'thinking', class: "img-fluid col-4" %>
+  </div>
+</div>
 
 <%= javascript_include_tag "voice_recognition/process.js" %>

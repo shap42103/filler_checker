@@ -10,7 +10,9 @@ ja:
     stop_recording: '録音を停止する'
     restart_recording: 'やり直す'
     show_result: '結果を確認する'
-    my_results: '録音履歴'
+    my_page: 'マイページ'
+    terms: '利用規約'
+    privacy: 'プライバシーポリシー'
     message:
       require_login: 'ログインしてください'
   time:
@@ -35,7 +37,14 @@ ja:
       failed: 'ログインに失敗しました'
     destroy:
       success: 'ログアウトしました'
+  recordings:
+    new:
+      choose_theme: '話題を選んで説明してみましょう'
   results:
     index:
       new_challenge: '新しい話題に挑戦する'
-      log: 'あなたの挑戦履歴'
+      log: '録音の記録'
+      frequency: 'フィラー頻度'
+      frequency_per_second: '秒あたりフィラー頻度'
+      recording_date: '録音日時'
+      per_count: '秒に１回'

@@ -1,3 +1,22 @@
+@import 'background';
+@import 'table';
+@import 'link';
+
 .display-none {
   display: none;
+}
+
+.btn-circle {
+  border-radius: 2rem;
+}
+
+.icon {
+  width: 40px;
+  height: 40px;
+  border: solid 1px #8B8680;
+}
+
+.index-top {
+  position: relative;
+  z-index: 999;
 }

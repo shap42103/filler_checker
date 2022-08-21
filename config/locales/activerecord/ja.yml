@@ -16,3 +16,5 @@ ja:
         length: '録音時間'
       theme:
         title: 'テーマ'
+      result:
+        filler_count: 'フィラー回数'

@@ -1,71 +1,72 @@
-<div id="slogan">
-  <div class="row">
-    <div class="col-6">
-      <h1>
-        <p>えっと、あのー…</p>
-        <p>無意識に出てしまう</p>
-        <p>そんな言葉を可視化する</p>
-      </h1>
-      <div>
-        <%= link_to t('defaults.challenge'), new_recording_path, class: 'btn btn-warning' %>
-        <%= link_to t('defaults.show_everyone_results'), '#', class: 'btn btn-info' %>
+<div class="main-color">
+  <div id="slogan" class="container mx-auto row">
+    <div class="col-6 d-flex align-items-center">
+      <div class="d-flex flex-column">
+        <p class="h1">えっと、あのー…</p>
+        <p class="h1">無意識に出てしまう</p>
+        <p class="h1">そんな言葉を可視化する</p>
+        <p>フィラーと言います</p>
+        <div>
+          <%= link_to t('defaults.challenge'), new_recording_path, class: 'btn btn-warning btn-circle' %>
+          <%= link_to t('defaults.show_everyone_results'), '#', class: 'btn btn-info btn-circle ms-1' %>
+        </div>
       </div>
     </div>
-    <div class="col-6">
-      <%= image_tag 'sample', class: "img-fluid" %>
+    <div class="col-6 d-flex flex-nowrap">
+      <%= image_tag 'before.svg', class: "img-fluid" %>
+      <%= image_tag 'after.svg', class: "img-fluid" %>
     </div>
   </div>
 </div>
 
-<div id="recommend-for">
-  <h2>こんなひとにおすすめ</h2>
-  <div class="row">
-    <div class="col-4">
-      <%= image_tag 'sample', class: "img-fluid rounded-circle" %>
-      <h3>text</h3>
-      <p>description</p>
-    </div>
-    <div class="col-4">
-      <%= image_tag 'sample', class: "img-fluid rounded-circle" %>
-      <h3>text</h3>
-      <p>description</p>
-    </div>
-    <div class="col-4">
-      <%= image_tag 'sample', class: "img-fluid rounded-circle" %>
-      <h3>text</h3>
-      <p>description</p>
+<div class="container mx-auto mb-3">
+  <div id="recommend-for" class="row mt-5">
+    <p class="h2 text-center">こんなひとにおすすめ</p>
+    <div class="row d-flex justify-content-between mt-3">
+      <div class="col-3">
+        <%= image_tag 'doyagao_man', class: "img-fluid rounded-circle border border-2" %>
+        <h3 class="text-center">もっとスムーズに<br>話せるようになりたい</h3>
+        <p class="text-center">説明</p>
+      </div>
+      <div class="col-3">
+        <%= image_tag 'explaining_man', class: "img-fluid rounded-circle border border-2" %>
+        <h3 class="text-center">好印象な<br>プレゼンがしたい</h3>
+        <p class="text-center">説明</p>
+      </div>
+      <div class="col-3">
+        <%= image_tag 'worried_woman', class: "img-fluid rounded-circle border border-2" %>
+        <h3 class="text-center">説明することに<br>慣れたい</h3>
+        <p class="text-center">説明</p>
+      </div>
     </div>
   </div>
-</div>
 
-<div id="how-to-use">
-  <h2>本サービスの使い方</h2>
-  <div class="row">
-    <div class="col-6">
-      <%= image_tag 'sample', class: "img-fluid" %>
+  <div id="how-to-use" class="row mt-5">
+    <p class="h2 text-center">本サービスの使い方</p>
+    <div class="row d-flex justify-content-center mt-3 border border-1">
+      <%= image_tag 'sample', class: "img-fluid col-3" %>
+      <div class="col-6 mt-3">
+        <p class="h3 mb-3">話題に沿って語ってみましょう</p>
+        <p>制限時間は６０秒</p>
+      </div>
     </div>
-    <div class="col-6">
-      <h3>text</h3>
-      <p>description</p>
+    <div class="row d-flex justify-content-center border border-1">
+      <div class="col-6 mt-3">
+        <p class="h3 mb-3">分析結果を記録しながら練習しましょう</p>
+        <p>まずは自分がどれだけフィラーを使っているのか知るのが大切です。</p>
+      </div>
+      <%= image_tag 'sample', class: "img-fluid col-3" %>
+    </div>
+    <div class="row d-flex justify-content-center border border-1">
+      <%= image_tag 'sample', class: "img-fluid col-3" %>
+      <div class="col-6 mt-3">
+        <p class="h3 mb-3">アプリ内やSNSでシェアしましょう</p>
+        <p>Twitterに投稿しましょう</p>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-center mt-3">
+      <%= link_to t('defaults.challenge'), new_recording_path, class: 'btn btn-warning col-4' %>
     </div>
   </div>
-  <div class="row">
-    <div class="col-6">
-      <h3>text</h3>
-      <p>description</p>
-    </div>
-    <div class="col-6">
-      <%= image_tag 'sample', class: "img-fluid" %>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-6">
-      <%= image_tag 'sample', class: "img-fluid" %>
-    </div>
-    <div class="col-6">
-      <h3>text</h3>
-      <p>description</p>
-    </div>
-  </div>
-  <%= link_to t('defaults.challenge'), new_recording_path, class: 'btn btn-warning' %>
 </div>

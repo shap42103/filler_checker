@@ -13,11 +13,14 @@ class ResultsController < ApplicationController
   def create
     @result = Result.new(result_params)
     if @result.save
-      redirect_to results_path, success: t('defaults.message.successed_analyze')
+      redirect_to recording_result_path(result_params[:recording_id], 1), success: t('defaults.message.successed_analyze')
     else
       flash.now[:danger] = t('.failed')
       redirect_to new_recording_path, danger: t('defaults.message.failed_analyze')
     end
+  end
+
+  def show
   end
 
   private

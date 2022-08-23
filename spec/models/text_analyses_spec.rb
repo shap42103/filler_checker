@@ -13,9 +13,6 @@ RSpec.describe 'TextAnalyses', type: :model do
       it '単語がnilのときエラーとなること' do
         expect(text_analysis_blank_word.valid?).to eq false
       end
-      it 'フィラーがnilのときエラーとなること' do
-        expect(text_analysis_blank_filler.valid?).to eq false
-      end
     end
     
     context '正常系' do

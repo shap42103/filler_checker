@@ -15,6 +15,7 @@ ja:
     privacy: 'プライバシーポリシー'
     message:
       require_login: 'ログインしてください'
+      successed_analyze: '音声認識が完了しました'
   time:
     formats:
       default: "%Y/%m/%d %H:%M"

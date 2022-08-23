@@ -31,6 +31,11 @@ RSpec.describe 'Users', type: :model do
     context '正常系' do
       it 'ユーザー名、メールアドレス、パスワード、パスワード確認が存在するときに正常に登録がされること' do
         expect(user.valid?).to eq true
+        expect(user.role == 'general').to eq true
+      end
+
+      it 'ユーザー権限のデフォルト値がgeneralであること' do
+        expect(user.role == 'general').to eq true
       end
     end
   end

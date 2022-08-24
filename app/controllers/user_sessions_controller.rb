@@ -9,7 +9,7 @@ class UserSessionsController < ApplicationController
     # このコードは審議
 
     if @user
-      redirect_back_or_to root_path, success: t('.success')
+      redirect_back_or_to results_path, success: t('.success')
     else
       flash.now[:danger] = t('.failed')
       render :new

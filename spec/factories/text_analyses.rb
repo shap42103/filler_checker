@@ -1,8 +1,9 @@
 FactoryBot.define do
-  factory :text_analyssis do
+  factory :text_analysis do
     word { '%えーと%' }
     filler { true }
-    
+    recording
+
     trait :not_filler do
       word { 'てすと' }
       filler { false }

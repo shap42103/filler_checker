@@ -13,7 +13,7 @@
   <div class="d-flex justify-content-center mt-5">
     <div class="col-8">
       <table class="table styled-table">
-        <thead class="thead-light">
+        <thead class="thead-light main-color">
           <tr>
             <th><%= Theme.human_attribute_name(:title) %></th>
             <th><%= Result.human_attribute_name(:filler_count) %></th>
@@ -21,6 +21,7 @@
             <th class="display-none"><%= t('.frequency_per_second') %></th>
             <th><%= User.human_attribute_name(:name) %></th>
             <th><%= t('.recording_date') %></th>
+            <th></th>
 
           </tr>
         </thead>
@@ -29,10 +30,11 @@
             <tr>
               <th scope="row"><%= result.recording.theme[:title] %></th>
               <td><%= result.filler_count %></td>
-              <td><%= "#{(result.recording[:length]/result.filler_count.to_f).round(1)}#{t('.per_count')}" %></td>
+              <td><%= "#{(result.recording[:length]/result.filler_count.to_f).round(1)}#{t('defaults.per_count')}" %></td>
               <td class="frequency display-none"><%= "#{(result.filler_count.to_f/result.recording[:length]).round(3)}" %></td>
               <td><%= result.recording.user[:name] %></td>
               <td class="created_at"><%= I18n.l(result.created_at) %></td>
+              <td class="detail"><%= link_to t('.detail'), recording_result_path(result.recording, 1), class: 'link_to' %></th>
             </tr>
           <% end %>
         </tbody>

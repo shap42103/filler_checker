@@ -28,7 +28,7 @@ RSpec.describe 'Results', type: :system do
         expect(find('#result-table-body')).to have_content('話題'), 'テーマが表示されていません'
       end
       it 'フィラー回数が表示されていること' do
-        expect(find('#result-table-body')).to have_content('2'), 'フィラー回数が表示されていません'
+        expect(find('#result-table-body')).to have_content('3'), 'フィラー回数が表示されていません'
       end
       it 'フィラー頻度が表示されていること' do
         expect(find('#result-table-body')).to have_content('秒に１回'), 'フィラー頻度が表示されていません'
@@ -42,13 +42,18 @@ RSpec.describe 'Results', type: :system do
     end
     context '結果詳細画面が表示されたとき' do
       it 'フィラー回数が表示されていること' do
-        expect(find('h2').text).to eq 'Result' # 仮
+        expect(page.all('.card-body')[0].text).to include '計 3 回'
       end
       it 'フィラー頻度が表示されていること' do
-        expect(find('h2').text).to eq 'Result' # 仮
+        expect(page.all('.card-body')[0].text).to include '20.0秒に１回'
       end
       it '最頻出フィラーが表示されていること' do
-        expect(find('h2').text).to eq 'Result' # 仮
+        expect(page.all('.card-body')[1].text).to eq '「えーと」'
+      end
+      it '他人の分析結果詳細にアクセスできないこと' do
+        visit recording_result_path(recording_other_user, 1)
+        expect(page).to have_content('権限がありません')
+        expect(page).not_to have_content('分析結果')
       end
     end
   end

@@ -1,4 +1,4 @@
-.footer_link {
+.link_to {
 	padding: 0.1em 0.3em;
 	position: relative;
 	display: inline-block;
@@ -7,7 +7,7 @@
   text-decoration: none;
 }
 
-.footer_link::after {
+.link_to::after {
 	position: absolute;
 	bottom: 0;
 	left: 0;
@@ -18,10 +18,10 @@
 	transition: .3s;
 }
 
-.footer_link:hover {
+.link_to:hover {
 	color: #8B8680;
 }
 
-.footer_link:hover::after {
+.link_to:hover::after {
 	width: 100%;
 }

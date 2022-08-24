@@ -1,1 +1,35 @@
-<h2>Result</h2>
+<% content_for(:title, t('.title')) %>
+<div class="container mt-5 d-flex flex-column align-items-center">
+
+  <p class="h2"><%= t('.result') %></p>
+  <%# <p class="h4 mt-3">あなたのフィラー癖は</p> %>
+
+  <div class="d-flex justify-content-center mt-3">
+    <div class="card text-center col-8 h4 me-3">
+      <div class="card-header main-color">
+        <%= Result.human_attribute_name(:filler_count) %>
+      </div>
+      <div class="card-body pt-5 pb-5">
+        <p><%= "#{t('defaults.sum')} #{@result.filler_count} #{t('defaults.count')}" %></p>
+        <p class="h6"><%= "（#{(@result.recording[:length]/@result.filler_count.to_f).round(1)}#{t('defaults.per_count')}）" %></p>
+      </div>
+    </div>
+    <div class="card text-center col-8 h4">
+      <div class="card-header main-color">
+        <%= t('.most_frequent_filler') %>
+      </div>
+      <div class="card-body pt-5 pb-5">
+        <p><%= "「#{@result.most_frequent_filler.gsub('%','')}」" %></p>
+      </div>
+    </div>
+  </div>
+
+  <p class="h3 mt-5"><%= t('defaults.how_to_speak_smoothly') %></p>
+  <p class="h4 mt-3"><%= t('defaults.speech_technique') %></p>
+  <p class="h4"><%= t('defaults.speech_technique') %></p>
+  <p class="h4"><%= t('defaults.speech_technique') %></p>
+
+  <%= link_to t('.to_my_results'), results_path, class: 'btn btn-warning col-4 mt-5' %>
+
+  <%= image_tag 'explain_chart', class: "img-fluid col-4" %>
+</div>

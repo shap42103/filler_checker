@@ -50,6 +50,9 @@ test:
 #
 production:
   <<: *default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
   database: filler_checker_production
   username: filler_checker
   password: <%= ENV["FILLER_CHECKER_DATABASE_PASSWORD"] %>

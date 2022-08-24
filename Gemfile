@@ -10,7 +10,7 @@ gem "rails", "~> 7.0.3", ">= 7.0.3.1"
 gem "sprockets-rails"
 
 # Use mysql as the database for Active Record
-gem "mysql2", "~> 0.5"
+# gem "mysql2", "~> 0.5"
 
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", "~> 5.0"
@@ -55,6 +55,7 @@ group :development, :test do
   gem 'faker'
   gem 'rspec-rails'
   gem 'factory_bot_rails'
+  gem "mysql2", "~> 0.5"
 end
 
 group :development do
@@ -71,6 +72,10 @@ end
 group :test do
   gem 'capybara'
   gem 'webdrivers'
+end
+
+group :production do
+  gem 'pg'
 end
 
 gem 'enum_help'

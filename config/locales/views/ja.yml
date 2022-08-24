@@ -10,9 +10,13 @@ ja:
     stop_recording: '録音を停止する'
     restart_recording: 'やり直す'
     show_result: '結果を確認する'
+    how_to_speak_smoothly: 'もっとスムーズに話すためには？'
     my_page: 'マイページ'
     terms: '利用規約'
     privacy: 'プライバシーポリシー'
+    per_count: '秒に１回'
+    sum: '計'
+    count: '回'
     message:
       require_login: 'ログインしてください'
       successed_analyze: '音声認識が完了しました'
@@ -48,4 +52,10 @@ ja:
       frequency: 'フィラー頻度'
       frequency_per_second: '秒あたりフィラー頻度'
       recording_date: '録音日時'
-      per_count: '秒に１回'
+      detail: '詳細'
+    show:
+      result: '分析結果'
+      most_frequent_filler: '最も多かったフィラー'
+      to_my_results: '結果一覧'
+      unauthorized: '権限がありません'
+

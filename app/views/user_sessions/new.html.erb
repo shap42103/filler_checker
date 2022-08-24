@@ -5,8 +5,8 @@
       <p class="h2"><%= t('.title') %></p>
       <%= render 'form', user: @user %>
       <div class='text-center d-flex justify-content-center'>
-        <%= link_to t('.to_register_page'), new_user_path, class: 'me-3' %>
-        <%= link_to t('.password_forget'), '#' %>
+        <%= link_to t('.to_register_page'), new_user_path, class: 'me-3 link_to' %>
+        <%= link_to t('.password_forget'), '#', class: 'link_to' %>
       </div>
     </div>
   </div>

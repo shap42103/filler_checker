@@ -37,6 +37,9 @@ RSpec.describe 'Results', type: :system do
   end
 
   describe '結果詳細画面' do
+    before do
+      visit recording_path(recording, 1)
+    end
     context '結果詳細画面が表示されたとき' do
       it 'フィラー回数が表示されていること' do
         expect(page.all('.card-body')[0].text).to include '計 3 回'

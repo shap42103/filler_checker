@@ -19,7 +19,7 @@ let Wrp = function() {
 		resultUpdatedIntervalElement: undefined,
 		extension: "",
 		extensionElement: undefined,
-		authorization: api_info.key ,
+		authorization: gon.api_key,
 		authorizationElement: undefined,
 		codec: "",
 		codecElement: undefined,

@@ -83,3 +83,5 @@ gem 'sorcery'
 gem "jsbundling-rails"
 gem "cssbundling-rails"
 gem 'rails-i18n'
+gem 'dotenv-rails'
+gem 'gon'

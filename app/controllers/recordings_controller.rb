@@ -2,6 +2,7 @@ class RecordingsController < ApplicationController
   def new
     @themes = Theme.all
     @recording = Recording.new
+    gon.api_key = ENV['API_KEY']
   end
 
   def create

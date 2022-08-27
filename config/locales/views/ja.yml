@@ -56,7 +56,7 @@ ja:
   recordings:
     new:
       title: '録音してみよう'
-      choose_theme: '話題を選んで説明してみましょう'
+      choose_theme: '話題を選んで1分間程度で説明してみましょう'
   results:
     index:
       title: '記録を見てみよう'

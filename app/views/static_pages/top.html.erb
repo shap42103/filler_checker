@@ -2,10 +2,15 @@
   <div id="slogan" class="container mx-auto row">
     <div class="col-6 d-flex align-items-center">
       <div class="d-flex flex-column">
-        <p class="h1">えっと、あのー…</p>
-        <p class="h1">無意識に出てしまう</p>
-        <p class="h1">そんな言葉を可視化する</p>
-        <p>フィラーと言います</p>
+        <div class="mb-2">
+          <p class="h1">えっと、あのー…</p>
+          <p class="h1">無意識に出てしまう</p>
+          <p class="h1">そんな言葉を見える化</p>
+        </div>
+        <div>
+          <p class="mb-1">フィラーと呼ばれるこれらの言葉をなくして</p>
+          <p>スピーチの印象アップをしましょう！</p>
+        </div>
         <div>
           <%= link_to t('defaults.challenge'), new_recording_path, class: 'btn btn-warning btn-circle' %>
           <%= link_to t('defaults.show_everyone_results'), '#', class: 'btn btn-info btn-circle ms-1' %>
@@ -13,8 +18,7 @@
       </div>
     </div>
     <div class="col-6 d-flex flex-nowrap">
-      <%= image_tag 'before.svg', class: "img-fluid" %>
-      <%= image_tag 'after.svg', class: "img-fluid" %>
+      <%= image_tag 'before_after', class: "img-fluid m-3" %>
     </div>
   </div>
 </div>
@@ -23,45 +27,69 @@
   <div id="recommend-for" class="row mt-5">
     <p class="h2 text-center">こんなひとにおすすめ</p>
     <div class="row d-flex justify-content-between mt-3">
-      <div class="col-3">
-        <%= image_tag 'doyagao_man', class: "img-fluid rounded-circle border border-2" %>
-        <h3 class="text-center">もっとスムーズに<br>話せるようになりたい</h3>
-        <p class="text-center">説明</p>
+      <div class="col-4 d-flex flex-column align-items-center">
+        <%= image_tag 'doyagao_man', class: "img-fluid rounded-circle border border-2 col-10 mb-2" %>
+        <div class="h3 text-center">
+          <p class="mb-0">もっとスムーズに</p>
+          <p class="mb-1">話せるようになりたい</p>
+        </div>
+        <div class="text-center">
+          <p class="mb-0">どのくらい言葉に詰まってしまう？</p>
+          <p>現状把握をしてみましょう</p>
+        </div>
       </div>
-      <div class="col-3">
-        <%= image_tag 'explaining_man', class: "img-fluid rounded-circle border border-2" %>
-        <h3 class="text-center">好印象な<br>プレゼンがしたい</h3>
-        <p class="text-center">説明</p>
+      <div class="col-4 d-flex flex-column align-items-center">
+        <%= image_tag 'explaining_man', class: "img-fluid rounded-circle border border-2 col-10 mb-2" %>
+        <div class="h3 text-center">
+          <p class="mb-0">好印象な</p>
+          <p class="mb-1">プレゼンがしたい</p>
+        </div>
+        <div class="text-center">
+          <p class="mb-0">フィラーを減らすためにはどうすれば？</p>
+          <p>テクニックを身につけましょう</p>
+        </div>
       </div>
-      <div class="col-3">
-        <%= image_tag 'worried_woman', class: "img-fluid rounded-circle border border-2" %>
-        <h3 class="text-center">説明することに<br>慣れたい</h3>
-        <p class="text-center">説明</p>
+      <div class="col-4 d-flex flex-column align-items-center">
+        <%= image_tag 'worried_woman', class: "img-fluid rounded-circle border border-2 col-10 mb-2" %>
+        <div class="h3 text-center">
+          <p class="mb-0">説明することに</p>
+          <p class="mb-1">慣れていない</p>
+        </div>
+        <div class="text-center">
+          <p class="mb-0">いざ説明しようとすると緊張する？</p>
+          <p>経験を自信につなげましょう</p>
+        </div>
       </div>
     </div>
   </div>
 
   <div id="how-to-use" class="row mt-5">
     <p class="h2 text-center">本サービスの使い方</p>
-    <div class="row d-flex justify-content-center mt-3 border border-1">
-      <%= image_tag 'sample', class: "img-fluid col-3" %>
+    <div class="row d-flex justify-content-center mt-3 border border-2">
+      <%= image_tag 'how_to_rec', class: "img-fluid col-3 m-2 blur" %>
       <div class="col-6 mt-3">
-        <p class="h3 mb-3">話題に沿って語ってみましょう</p>
-        <p>制限時間は６０秒</p>
+        <p class="h3 mb-4">話題に沿って語ってみましょう</p>
+        <p class="mb-1">テーマを選んだら早速 "録音を開始"</p>
+        <p class="mb-1">まずは上手に話そうと意識する必要はありません！</p>
+        <p class="mb-1">ありのまま自分の考えを語ってみましょう</p>
       </div>
     </div>
-    <div class="row d-flex justify-content-center border border-1">
+    <div class="row d-flex justify-content-center border border-2">
       <div class="col-6 mt-3">
-        <p class="h3 mb-3">分析結果を記録しながら練習しましょう</p>
-        <p>まずは自分がどれだけフィラーを使っているのか知るのが大切です。</p>
+        <p class="h3 mb-4">分析結果を記録しながら練習しましょう</p>
+        <p class="mb-1">結果を確認してあなたのフィラー癖を見える化</p>
+        <p class="mb-1">マイページではフィラー頻度をグラフで管理し</p>
+        <p class="mb-1">練習の成果がひと目で確認できます！</p>
       </div>
-      <%= image_tag 'sample', class: "img-fluid col-3" %>
+      <%= image_tag 'show_result', class: "img-fluid col-3 m-2 blur" %>
     </div>
-    <div class="row d-flex justify-content-center border border-1">
-      <%= image_tag 'sample', class: "img-fluid col-3" %>
+    <div class="row d-flex justify-content-center border border-2">
+      <%= image_tag 'share_results', class: "img-fluid col-3 m-2 blur" %>
       <div class="col-6 mt-3">
-        <p class="h3 mb-3">アプリ内やSNSでシェアしましょう</p>
-        <p>Twitterに投稿しましょう</p>
+        <p class="h3 mb-4">他のユーザーと結果をシェアしましょう</p>
+        <p class="mb-1">登録ユーザーのフィラー頻度をテーマごとにランキング表示</p>
+        <p class="mb-1">SNSへの投稿もしてみましょう！</p>
+        <p class="mb-1">※シェア機能は今後実装予定です</p>
       </div>
     </div>
 

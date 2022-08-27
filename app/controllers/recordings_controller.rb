@@ -12,7 +12,7 @@ class RecordingsController < ApplicationController
     @recording.set_theme(theme_title)
 
     if @recording.save
-      redirect_to new_recording_text_analysis_path(@recording), success: t('.success')
+      redirect_to new_recording_text_analysis_path(@recording)
     else
       @themes = Theme.all
       render :new

@@ -2,7 +2,7 @@
 	background-color: #AEDEF0;
 }
 
-.blur {
+.main-color.blur {
 	filter: drop-shadow(0 2px 2px #AEDEF0) drop-shadow(0 -2px 2px #AEDEF0);
 	position: relative;
 }
@@ -18,4 +18,13 @@
 
 .footer-color {
   background-color: #EDBC92;
+}
+
+.sub-color {
+  background-color: #ECB7CE;
+}
+
+.blur {
+	filter: drop-shadow(0 2px 2px #FFFFFF) drop-shadow(0 -2px 2px #FFFFFF);
+	position: relative;
 }

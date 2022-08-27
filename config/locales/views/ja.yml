@@ -1,5 +1,6 @@
 ja:
   defaults:
+    title: 'えーとチェッカー'
     login: 'ログイン'
     register: '新規登録'
     logout: 'ログアウト'
@@ -20,6 +21,16 @@ ja:
     message:
       require_login: 'ログインしてください'
       successed_analyze: '音声認識が完了しました'
+  techniques:
+    accept_silence:
+      heading:  '沈黙を恐れず間をおいてみましょう'
+      description: '言葉に詰まったとき、フィラーが出そうになるのをぐっとこらえてみましょう！数秒の沈黙は意外と気にならないものです。'
+    prepare_speech:
+      heading:  'プレゼン内容を十分に準備しましょう'
+      description: 'スムーズに言葉が出てこないのは単に準備不足なだけかもしれません。資料の準備や話す内容を整理しておきましょう。'
+    be_used:
+      heading:  'たくさん練習して話すことに慣れましょう'
+      description: '頭ではわかっていてもうまくできない…。自然体で話せるようになるまで繰り返し練習しましょう。自信や落ち着きが印象アップにつながるはずです！'
   time:
     formats:
       default: "%Y/%m/%d %H:%M"
@@ -44,9 +55,11 @@ ja:
       success: 'ログアウトしました'
   recordings:
     new:
+      title: '録音してみよう'
       choose_theme: '話題を選んで説明してみましょう'
   results:
     index:
+      title: '記録を見てみよう'
       new_challenge: '新しい話題に挑戦する'
       log: '録音の記録'
       frequency: 'フィラー頻度'
@@ -54,8 +67,13 @@ ja:
       recording_date: '録音日時'
       detail: '詳細'
     show:
+      title: '分析の結果は？'
       result: '分析結果'
       most_frequent_filler: '最も多かったフィラー'
       to_my_results: '結果一覧'
       unauthorized: '権限がありません'
-
+  static_pages:
+    privacy:
+      title: 'プライバシーポリシー'
+    terms:
+      title: '利用規約'

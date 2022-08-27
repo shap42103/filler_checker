@@ -6,7 +6,7 @@
         <%= ft.collection_select :title, @themes, :title, :title, {prompt: ""}, {class: "form-select"} %>
       </div>
     <% end %>
-    <div class="display-nonea">
+    <div class="display-none">
       <%= f.label :voice %>
       <%= f.text_field :voice, class: 'form-control', value: 'recording_data' %> <%# 未実装。録音データを格納する。 %>
       <%= f.label :text %>

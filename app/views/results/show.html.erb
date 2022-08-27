@@ -24,12 +24,27 @@
     </div>
   </div>
 
-  <p class="h3 mt-5"><%= t('defaults.how_to_speak_smoothly') %></p>
-  <p class="h4 mt-3"><%= t('defaults.speech_technique') %></p>
-  <p class="h4"><%= t('defaults.speech_technique') %></p>
-  <p class="h4"><%= t('defaults.speech_technique') %></p>
+  <p class="h2 mt-5 mb-3"><%= t('defaults.how_to_speak_smoothly') %></p>
+  <div class="d-flex flex-column col-6">
+    <div class="card">
+      <div class="card-header sub-color h5">
+        <%= t('techniques.accept_silence.heading') %>
+      </div>
+      <p class="m-1"><%= t('techniques.accept_silence.description') %></p>
+    </div>
+    <div class="card mt-3">
+      <div class="card-header sub-color h5">
+        <%= t('techniques.prepare_speech.heading') %>
+      </div>
+      <p class="m-1"><%= t('techniques.prepare_speech.description') %></p>
+    </div>
+    <div class="card mt-3">
+      <div class="card-header sub-color h5">
+        <%= t('techniques.be_used.heading') %>
+      </div>
+      <p class="m-1"><%= t('techniques.be_used.description') %></p>
+    </div>
+  </div>
 
   <%= link_to t('.to_my_results'), results_path, class: 'btn btn-warning col-4 mt-5' %>
-
-  <%= image_tag 'explain_chart', class: "img-fluid col-4" %>
 </div>

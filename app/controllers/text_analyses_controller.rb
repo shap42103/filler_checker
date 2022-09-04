@@ -1,13 +1,14 @@
 class TextAnalysesController < ApplicationController
   
-  def new(words = [])
+  def new()
     @recording = Recording.find(params[:recording_id])
-    texts = @recording.text.split("/-/-/")
-    texts.each do |text|
-      hash = JSON.parse(text)
-      words += hash['results'][0]['tokens']
+    hash = JSON.parse(@recording.text)
+    word = hash['results'][0]['tokens']
+    if word[0]&.keys.present?
+      @text_analyses = TextAnalysisCollection.new(word, action_name)
+    else
+      redirect_to new_recording_path, danger: t('defaults.message.failed_analyze')
     end
-    @text_analyses = TextAnalysisCollection.new(words, action_name)
   end
   
   def create

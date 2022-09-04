@@ -23,6 +23,9 @@
       </div>
     </div>
   </div>
+  <div>
+    <%= audio_tag(url_for(@recording.audio), controls: true) %>
+  </div>
 
   <p class="h2 mt-5 mb-3"><%= t('defaults.how_to_speak_smoothly') %></p>
   <div class="d-flex flex-column col-6">

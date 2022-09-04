@@ -24,6 +24,7 @@ ja:
     message:
       require_login: 'ログインしてください'
       successed_analyze: '音声認識が完了しました'
+      require_user_registration: 'ユーザー登録が必要です'
   techniques:
     accept_silence:
       heading:  '沈黙を恐れず間をおいてみましょう'

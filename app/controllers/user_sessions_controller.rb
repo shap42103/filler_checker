@@ -6,7 +6,6 @@ class UserSessionsController < ApplicationController
 
   def create
     @user = login(params[:email], params[:password])
-    # このコードは審議
 
     if @user
       redirect_back_or_to results_path, success: t('.success')
@@ -19,12 +18,5 @@ class UserSessionsController < ApplicationController
   def destroy
     logout
     redirect_to root_path, success: t('.success')
-  end
-
-  private
-
-  def session_params
-    # params.require(:user_session).permit(:email, :password)
-    # params.require(:user).permit(:email, :password)
   end
 end

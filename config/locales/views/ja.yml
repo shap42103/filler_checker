@@ -18,6 +18,9 @@ ja:
     per_count: '秒に１回'
     sum: '計'
     count: '回'
+    choose_theme_or_upload: 'テーマを選ぶか音声をアップロードしてください'
+    in_progress: '音声の処理中'
+    uploaded_voice: 'アップロードした音声'
     message:
       require_login: 'ログインしてください'
       successed_analyze: '音声認識が完了しました'

@@ -14,6 +14,7 @@ ja:
         voice: '音声'
         text: '文字起こし'
         length: '録音時間'
+        audio: '音声をアップロード'
       theme:
         title: 'テーマ'
       result:

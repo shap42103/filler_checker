@@ -1,4 +1,6 @@
 class RecordingsController < ApplicationController
+  skip_before_action :require_login, only: %i[new create]
+
   def new
     @themes = Theme.where.not(title: t('defaults.uploaded_voice'))
     @recording = Recording.new
@@ -6,6 +8,7 @@ class RecordingsController < ApplicationController
   end
 
   def create
+    guest_login() unless logged_in?
     @recording = current_user.recordings.new(recording_params)
     if @recording.audio.attached?
       if recording_params[:theme]
@@ -28,10 +31,6 @@ class RecordingsController < ApplicationController
       @themes = Theme.all
       render :new
     end
-  end
-
-  def show
-    @result = Result.find_by(recording_id: params[:id])
   end
 
   private

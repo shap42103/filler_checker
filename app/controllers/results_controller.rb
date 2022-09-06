@@ -1,6 +1,10 @@
 class ResultsController < ApplicationController
   def index
-    @results = Result.joins(:recording).where("recordings.user_id = ?", current_user.id).order(created_at: :desc)
+    if current_user.guest?
+      redirect_to root_path, danger: t('defaults.message.require_user_registration')
+    else
+      @results = Result.joins(:recording).where("recordings.user_id = ?", current_user.id).order(created_at: :desc)
+    end
   end
 
   def new

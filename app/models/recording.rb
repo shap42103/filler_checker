@@ -33,4 +33,9 @@ class Recording < ApplicationRecord
     end
     return false
   end
+
+  def guest_login()
+    guest_user = User.find_by(role: 'guest')
+    auto_login(guest_user)
+  end
 end

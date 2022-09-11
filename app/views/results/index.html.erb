@@ -5,15 +5,15 @@
     <%= link_to t('.new_challenge'), new_recording_path, class: 'btn btn-warning btn-circle col-4' %>
   </div>
   <div class="d-flex justify-content-center mt-5">
-    <div class="col-10">
+    <div class="col-12 col-lg-10">
       <canvas id="frequencyChart"></canvas>
     </div>
   </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js" integrity="sha512-ElRFoEQdI5Ht6kZvyzXhYG9NqjtkmlkfYk0wr6wHxU9JEHakS7UJZNeml5ALk+8IKlU6jDgMabC3vkumRokgJA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
   <div class="d-flex justify-content-center mt-5">
-    <div class="col-8">
-      <table class="table styled-table">
+    <div class="col-12 col-lg-8 table-responsive">
+      <table class="table styled-table text-nowrap">
         <thead class="thead-light main-color">
           <tr>
             <th><%= Theme.human_attribute_name(:title) %></th>
@@ -22,8 +22,7 @@
             <th class="display-none"><%= t('.frequency_per_second') %></th>
             <th><%= User.human_attribute_name(:name) %></th>
             <th><%= t('.recording_date') %></th>
-            <th></th>
-
+            <th></th> <%#= 空のヘッダー %>
           </tr>
         </thead>
         <tbody id="result-table-body">

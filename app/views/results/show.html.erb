@@ -5,7 +5,7 @@
   <%# <p class="h4 mt-3">あなたのフィラー癖は</p> %>
 
   <div class="d-flex justify-content-center mt-3">
-    <div class="card text-center col-8 h4 me-3">
+    <div class="card text-center col-5 h4 me-3">
       <div class="card-header main-color">
         <%= Result.human_attribute_name(:filler_count) %>
       </div>
@@ -14,7 +14,7 @@
         <p class="h6"><%= "（#{(@result.recording[:length]/@result.filler_count.to_f).round(1)}#{t('defaults.per_count')}）" %></p>
       </div>
     </div>
-    <div class="card text-center col-8 h4">
+    <div class="card text-center col-5 h4">
       <div class="card-header main-color">
         <%= t('.most_frequent_filler') %>
       </div>
@@ -28,7 +28,7 @@
   </div>
 
   <p class="h2 mt-5 mb-3"><%= t('defaults.how_to_speak_smoothly') %></p>
-  <div class="d-flex flex-column col-6">
+  <div class="d-flex flex-column col-12 col-lg-6">
     <div class="card">
       <div class="card-header sub-color h5">
         <%= t('techniques.accept_silence.heading') %>

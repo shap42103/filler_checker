@@ -1,19 +1,19 @@
 <header class="header header-color index-top">
-  <nav class="navbar navbar-expand-lg">
-      <ul class="navbar-nav me-auto">
-        <li class="nav-item">
-          <%= link_to root_path, class: 'navbar-brand ms-3' do %>
-            <%#= image_tag 'logo' %>
-            <%= t('defaults.title') %>
-          <% end %>
-        </li>
-      </ul>
-      <ul class="navbar-nav ms-auto">
-        <% if logged_in? %>
-          <%= render 'shared/after_login_header_link' %>
-        <% else %>
-          <%= render 'shared/before_login_header_link' %>
+  <nav class="navbar navbar-expand">
+    <ul class="navbar-nav me-auto">
+      <li class="nav-item">
+        <%= link_to root_path, class: 'navbar-brand ms-3' do %>
+          <%#= image_tag 'logo' %>
+          <%= t('defaults.title') %>
         <% end %>
-      </ul>
+      </li>
+    </ul>
+    <ul class="navbar-nav ms-auto">
+      <% if logged_in? %>
+        <%= render 'shared/after_login_header_link' %>
+      <% else %>
+        <%= render 'shared/before_login_header_link' %>
+      <% end %>
+    </ul>
   </nav>
 </header>

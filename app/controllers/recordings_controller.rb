@@ -10,12 +10,11 @@ class RecordingsController < ApplicationController
   def create
     guest_login() unless logged_in?
     @recording = current_user.recordings.new(recording_params)
-    if @recording.audio.attached?
-      if recording_params[:theme]
-        theme_title = theme_params[:theme].fetch(:title)
-      else
-        theme_title = t('defaults.uploaded_voice')
-      end
+
+    if @recording.audio.attached? && !recording_params[:theme]
+      theme_title = t('defaults.uploaded_voice') # 添付あり＆テーマ未指定 のとき
+    else
+      theme_title = theme_params[:theme].fetch(:title) # 添付あり＆テーマ指定 or 添付なし のとき
     end
     @recording.set_theme(theme_title)
 

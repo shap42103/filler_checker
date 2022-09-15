@@ -44,6 +44,21 @@ ja:
     create:
       success: 'ユーザー登録が完了しました'
       failed: 'ユーザー登録に失敗しました'
+    edit:
+      title: 'アカウント設定'
+      update: '更新'
+      change_password: 'パスワードの変更'
+      delete_account: 'アカウント削除'
+      confirm_delete: 'ユーザー情報が削除されます。実行しますか？'
+    edit_form:
+      update: 'ユーザー情報を更新'
+    update:
+      success: 'ユーザー情報を更新しました'
+      failed: 'ユーザー情報の更新に失敗しました'
+    destroy:
+      success: 'ユーザー情報が削除されました'
+    change_password:
+      success: '登録のメールアドレスにパスワード変更用のリンクを送信しました'
   user_sessions:
     form:
       email: 'メールアドレス'
@@ -81,3 +96,20 @@ ja:
       title: 'プライバシーポリシー'
     terms:
       title: '利用規約'
+  password_resets:
+    new:
+      title: 'パスワード再設定'
+      submit: '申請'
+    create:
+      success: 'パスワード再設定用のメールを送付しました'
+    edit:
+      title: 'パスワード再設定'
+      submit: 'パスワードを再設定'
+    update:
+      success: 'パスワードを再設定しました'
+      fail: 'パスワードの再設定に失敗しました'
+    edit_form:
+      submit: 'パスワードを再設定'
+  user_mailer:
+    reset_password_email:
+      subject: 'パスワードを再設定してください'

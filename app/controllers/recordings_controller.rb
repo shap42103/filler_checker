@@ -28,7 +28,7 @@ class RecordingsController < ApplicationController
       redirect_to new_recording_text_analysis_path(@recording)
     else
       @themes = Theme.all
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 

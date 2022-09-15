@@ -27,7 +27,7 @@ class ResultsController < ApplicationController
   def show
     @recording = Recording.find(params[:recording_id])
     @result = Result.find_by(recording_id: @recording.id)
-    redirect_to results_path, danger: t('.unauthorized') unless @recording.user_id == current_user.id
+    not_authenticated unless @recording.user_id == current_user.id
   end
 
   private

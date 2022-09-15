@@ -11,7 +11,7 @@ class UserSessionsController < ApplicationController
       redirect_back_or_to results_path, success: t('.success')
     else
       flash.now[:danger] = t('.failed')
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
   

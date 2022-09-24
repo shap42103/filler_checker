@@ -67,6 +67,8 @@ group :development do
 
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
+
+  gem 'letter_opener_web', '~> 1.0'
 end
 
 group :test do
@@ -86,3 +88,4 @@ gem 'rails-i18n'
 gem 'dotenv-rails'
 gem 'gon'
 gem "aws-sdk-s3", require: false
+gem 'config'

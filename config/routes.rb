@@ -8,8 +8,14 @@ Rails.application.routes.draw do
   get 'results', to: "results#index"
 
   resources :users
+  get 'users/:id/change_password', to: "users#change_password", as: :change_password
+
+  resources :password_resets, only: %i[new create edit update]
+
   resources :recordings, only: %i[new create show] do
     resources :text_analyses, only: %i[new create]
     resources :results, only: %i[new create show]
   end
+
+  mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?
 end

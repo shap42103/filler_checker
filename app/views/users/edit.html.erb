@@ -1,0 +1,11 @@
+<% content_for(:title, t('.title')) %>
+<div class="container">
+  <div class="row">
+    <div class="col-md-10 offset-md-1 col-lg-8 offset-lg-2">
+      <p class="h2"><%= t('.title') %></p>
+      <%= render 'edit_form', user: @user %>
+      <%= link_to t('.change_password'), change_password_path(@user), class: 'mt-3 link_to' %>
+      <%= button_to t('.delete_account'), user_path, class: 'link_to', method: :delete, form: { data: { turbo_confirm: t('.confirm_delete') }} %>
+    </div>
+  </div>
+</div>

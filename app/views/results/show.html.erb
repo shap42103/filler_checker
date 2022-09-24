@@ -1,7 +1,12 @@
 <% content_for(:title, t('.title')) %>
 <div class="container mt-5 d-flex flex-column align-items-center">
-
-  <p class="h2"><%= t('.result') %></p>
+  <p class="h2">
+    <%= t('.result') %>
+      <%= link_to @tweet_url, class: 'ms-2 btn btn-primary', target: '_blank' do %>
+        <i class="bi bi-twitter"></i>
+        <%= t('.share_twitter') %>
+      <% end %>
+  </p>
   <%# <p class="h4 mt-3">あなたのフィラー癖は</p> %>
 
   <div class="d-flex justify-content-center mt-3">
@@ -11,7 +16,7 @@
       </div>
       <div class="card-body pt-5 pb-5">
         <p><%= "#{t('defaults.sum')} #{@result.filler_count} #{t('defaults.count')}" %></p>
-        <p class="h6"><%= "（#{(@result.recording[:length]/@result.filler_count.to_f).round(1)}#{t('defaults.per_count')}）" %></p>
+        <p class="h6"><%= @result.filler_interval_text %></p>
       </div>
     </div>
     <div class="card text-center col-5 h4">
@@ -24,7 +29,9 @@
     </div>
   </div>
   <div>
-    <%= audio_tag(url_for(@recording.audio), controls: true) %>
+    <% if @recording.audio.present? %>
+      <%= audio_tag(url_for(@recording.audio), controls: true) %>
+    <% end %>
   </div>
 
   <p class="h2 mt-5 mb-3"><%= t('defaults.how_to_speak_smoothly') %></p>
@@ -48,6 +55,5 @@
       <p class="m-1"><%= t('techniques.be_used.description') %></p>
     </div>
   </div>
-
   <%= link_to t('.to_my_results'), results_path, class: 'btn btn-warning col-4 mt-5' %>
 </div>

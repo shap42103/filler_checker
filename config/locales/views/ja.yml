@@ -91,6 +91,7 @@ ja:
       most_frequent_filler: '最も多かったフィラー'
       to_my_results: '結果一覧'
       unauthorized: '権限がありません'
+      share_twitter: '結果をツイート'
   static_pages:
     privacy:
       title: 'プライバシーポリシー'

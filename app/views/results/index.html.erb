@@ -30,8 +30,8 @@
             <tr>
               <th scope="row"><%= result.recording.theme[:title] %></th>
               <td><%= result.filler_count %></td>
-              <td><%= "#{(result.recording[:length]/result.filler_count.to_f).round(1)}#{t('defaults.per_count')}" %></td>
-              <td class="frequency display-none"><%= "#{(result.filler_count.to_f/result.recording[:length]).round(3)}" %></td>
+              <td><%= result.filler_interval_text %></td>
+              <td class="frequency display-none"><%= 1/result.filler_interval %></td>
               <td><%= result.recording.user[:name] %></td>
               <td class="created_at"><%= I18n.l(result.created_at) %></td>
               <td class="detail"><%= link_to t('.detail'), recording_result_path(result.recording, 1), class: 'link_to' %></th>

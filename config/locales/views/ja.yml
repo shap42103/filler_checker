@@ -92,6 +92,13 @@ ja:
       to_my_results: '結果一覧'
       unauthorized: '権限がありません'
       share_twitter: '結果をツイート'
+  rankings:
+    index:
+      title: 'ランキング'
+      new_challenge: '新しく挑戦する'
+    table:
+      frequency: 'フィラー頻度'
+      recording_date: '録音日時'
   static_pages:
     privacy:
       title: 'プライバシーポリシー'

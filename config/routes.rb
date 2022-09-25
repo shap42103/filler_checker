@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   post 'login', to: "user_sessions#create"
   delete 'logout', to: 'user_sessions#destroy', as: :logout
   get 'results', to: "results#index"
+  get 'rankings', to: "rankings#index"
 
   resources :users
   get 'users/:id/change_password', to: "users#change_password", as: :change_password

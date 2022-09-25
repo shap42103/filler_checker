@@ -1,0 +1,17 @@
+<% content_for(:title, t('.title')) %>
+<div class="container mt-5">
+  <p class="h2 text-center"><%= t('.title') %></p>
+  <div class="d-flex justify-content-center mt-2">
+    <%= link_to t('.new_challenge'), new_recording_path, class: 'btn btn-warning btn-circle col-4' %>
+  </div>
+
+  <div class="d-flex justify-content-center mt-3">
+    <div class="col-12 col-lg-8 table-responsive">
+      <% @themes.each do |theme| %>
+        <% unless theme.title == 'アップロードした音声' %>
+          <%= render 'table', theme_id: theme.id %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>

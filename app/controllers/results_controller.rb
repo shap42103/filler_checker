@@ -50,7 +50,7 @@ class ResultsController < ApplicationController
     texts = []
     texts[0] = "つなぎ言葉（フィラー）の回数は#{result.filler_interval_text}でした\n\n"
     
-    if result.filler_interval.infinite? == 1
+    if result.filler_interval == 9999 # never
       texts[0] = "つなぎ言葉（フィラー）はありませんでした！\n\n"
       texts[1] = "#{current_user.name}は\n一切のよどみなく人にものごとを伝えられる\nスピーチマスターです！"
     else

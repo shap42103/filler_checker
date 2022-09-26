@@ -89,3 +89,4 @@ gem 'dotenv-rails'
 gem 'gon'
 gem "aws-sdk-s3", require: false
 gem 'config'
+gem 'googleauth'

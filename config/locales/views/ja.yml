@@ -121,3 +121,8 @@ ja:
   user_mailer:
     reset_password_email:
       subject: 'パスワードを再設定してください'
+  google_login:
+    callback:
+      success: 'Googleアカウントでログインしました'
+      failed: 'ログインに失敗しました'
+      invalid_request: '不正なリクエストです'

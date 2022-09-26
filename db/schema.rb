@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_12_214841) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_26_012655) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -88,8 +88,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_12_214841) do
     t.datetime "reset_password_token_expires_at"
     t.datetime "reset_password_email_sent_at"
     t.integer "access_count_to_reset_password_page", default: 0
-    t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["name"], name: "index_users_on_name", unique: true
+    t.integer "login_type", default: 0, null: false
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token"
   end
 

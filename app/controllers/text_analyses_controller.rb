@@ -1,6 +1,7 @@
 class TextAnalysesController < ApplicationController
-  
-  def new()
+  skip_before_action :require_account, only: %i[new create]
+
+  def new
     @recording = Recording.find(params[:recording_id])
     hash = JSON.parse(@recording.text)
     word = hash['results'][0]['tokens']

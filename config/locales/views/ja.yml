@@ -23,8 +23,8 @@ ja:
     uploaded_voice: 'アップロードした音声'
     message:
       require_login: 'ログインしてください'
+      require_account: 'ユーザー登録が必要です'
       successed_analyze: '音声認識が完了しました'
-      require_user_registration: 'ユーザー登録が必要です'
   techniques:
     accept_silence:
       heading:  '沈黙を恐れず間をおいてみましょう'

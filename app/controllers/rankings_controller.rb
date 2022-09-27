@@ -1,5 +1,6 @@
 class RankingsController < ApplicationController
   skip_before_action :require_login, only: %i[index]
+  skip_before_action :require_account, only: %i[index]
 
   def index
     @themes = Theme.all

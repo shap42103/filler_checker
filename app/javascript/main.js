@@ -5,4 +5,4 @@ function pageOpen(pathName) {
   return (id == "") ? null : document.getElementById(id).submit();
 }
 
-window.addEventListener('DOMContentLoaded', pageOpen(window.location.pathname));
+document.addEventListener('turbo:load', () => { pageOpen(window.location.pathname) });

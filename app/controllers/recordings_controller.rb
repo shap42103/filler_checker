@@ -1,5 +1,6 @@
 class RecordingsController < ApplicationController
   skip_before_action :require_login, only: %i[new create]
+  skip_before_action :require_account, only: %i[new create]
 
   def new
     @themes = Theme.where.not(title: t('defaults.uploaded_voice'))
@@ -8,7 +9,7 @@ class RecordingsController < ApplicationController
   end
 
   def create
-    guest_login() unless logged_in?
+    guest_login unless logged_in?
     @recording = current_user.recordings.new(recording_params)
 
     if @recording.audio.attached? && !recording_params[:theme]
@@ -40,5 +41,10 @@ class RecordingsController < ApplicationController
   
   def theme_params
     params.require(:recording).permit(theme: [:title])
+  end
+
+  def guest_login
+    guest_user = User.find_by(role: 'guest')
+    auto_login(guest_user)
   end
 end

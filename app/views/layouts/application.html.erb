@@ -9,6 +9,17 @@
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= include_gon %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+    <% if Rails.env.production? %>
+      <!-- Google tag (gtag.js) -->
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-GCYPEVXP4J"></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-GCYPEVXP4J');
+      </script>
+    <% end %>
   </head>
 
 <body class="background-color">

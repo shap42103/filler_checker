@@ -6,19 +6,19 @@
   <table class="table styled-table text-nowrap mb-4">
     <thead class="thead-light main-color">
       <tr>
+        <th><%= t('.rank') %></th>
         <th><%= t('.frequency') %></th>
         <th><%= Result.human_attribute_name(:filler_count) %></th>
         <th><%= User.human_attribute_name(:name) %></th>
-        <th><%= t('.recording_date') %></th>
       </tr>
     </thead>
     <tbody id="result-table-body">
-      <% @results.where("recordings.theme_id = ?", theme_id).sort_by{ |result| result.filler_interval }.reverse.each do |result| %>
+      <% @results.where("recordings.theme_id = ?", theme_id).limit(5).sort_by{ |result| result.filler_interval }.reverse.each_with_index do |result, index| %>
         <tr>
+          <td><%= index + 1 %></td>
           <td><%= result.filler_interval_text %></td>
           <td><%= result.filler_count %></td>
           <td><%= result.recording.user[:name] %></td>
-          <td class="created_at"><%= I18n.l(result.created_at) %></td>
         </tr>
       <% end %>
     </tbody>

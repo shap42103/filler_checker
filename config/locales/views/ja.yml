@@ -97,6 +97,7 @@ ja:
       title: 'ランキング'
       new_challenge: '新しく挑戦する'
     table:
+      rank: '順位'
       frequency: 'フィラー頻度'
       recording_date: '録音日時'
   static_pages:

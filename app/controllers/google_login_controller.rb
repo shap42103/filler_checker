@@ -3,7 +3,7 @@ class GoogleLoginController < ApplicationController
   require 'googleauth/id_tokens/verifier'
 
   skip_before_action :require_login, only: %i[callback]
-  protect_from_forgery except: :callback
+  skip_forgery_protection only: :callback
   before_action :verify_g_csrf_token
 
   def callback

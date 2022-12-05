@@ -15,7 +15,7 @@ default: &default
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   username: root
   password:
-  host: localhost
+  host: <%= ENV["DATABASE_HOST"] %>
 
 development:
   <<: *default
@@ -54,5 +54,5 @@ production:
   encoding: unicode
   pool: 5
   database: filler_checker_production
-  username: filler_checker
-  password: <%= ENV["FILLER_CHECKER_DATABASE_PASSWORD"] %>
+  username: <%= ENV["DATABASE_USERNAME"] %>
+  password: <%= ENV["DATABASE_PASSWORD"] %>
